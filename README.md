@@ -17,6 +17,7 @@ The application code is in a separate repository: [parth-access/LaundryFlow](htt
 | File | Content |
 | --- | --- |
 | `01_normalization.md` | From the paper register (unnormalized) to 1NF, 2NF, 3NF and BCNF, with the final six tables and the deliberate exceptions |
+| `03_schema.sql` | The PostgreSQL schema: six tables with keys, CHECK constraints, indexes and the starting policy (10 free, Rs 5 per extra) |
 
 The ER diagram, the schema (`.sql`), the queries and their analysis will be added here as they are finished.
 
