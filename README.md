@@ -27,5 +27,5 @@ The ER diagram, the queries (`04_queries.sql`) and their analysis will be added 
 | --- | --- |
 | Parth Saarthi Chhikara | [parth-access](https://github.com/parth-access) |
 | Tanishq Tyagi | [tanishqt25](https://github.com/tanishqt25) |
-| Dhruv Maan | [dhruvm25142-end](https://github.com/dhruvm25142-end) |
+| Dhruv Maan | [dhruvm25142-eng](https://github.com/dhruvm25142-eng) |
 | Aarabdh Sharma | [aarabdh-ICA](https://github.com/aarabdh-ICA) |
