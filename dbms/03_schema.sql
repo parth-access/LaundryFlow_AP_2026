@@ -135,6 +135,12 @@ CREATE INDEX ix_students_bag_number ON students (bag_number, bag_prefix);
 -- A student's history, newest first.
 CREATE INDEX ix_orders_student ON orders (student_id, submitted_at DESC);
 
+-- A student can have only one open order (submitted, received or ready).
+-- The app's submit query (W10) relies on this: without it, two submits at
+-- the same moment could both be saved.
+CREATE UNIQUE INDEX uq_orders_one_open_per_student ON orders (student_id)
+    WHERE order_status IN ('SUBMITTED','RECEIVED','READY');
+
 -- Counter queue and "ready to collect" lists: only open orders, oldest first.
 CREATE INDEX ix_orders_open ON orders (order_status, submitted_at)
     WHERE order_status IN ('SUBMITTED','RECEIVED','READY');
