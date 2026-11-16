@@ -1,0 +1,68 @@
+erDiagram
+    STAFF {
+        int staff_id PK
+        text full_name
+        text email UK
+        text role "COUNTER or ADMIN"
+        boolean is_active
+    }
+    STUDENTS {
+        int student_id PK
+        text enrollment_no UK
+        text full_name
+        text email UK
+        char bag_prefix "B or G, UK with bag_number"
+        int bag_number "UK with bag_prefix"
+        timestamptz bag_verified_at
+        int bag_verified_by FK
+        boolean is_active
+        timestamptz created_at
+    }
+    POLICIES {
+        int policy_id PK
+        date effective_from UK
+        int free_limit
+        numeric fine_per_extra
+    }
+    ORDERS {
+        int order_id PK
+        int student_id FK
+        int policy_id FK
+        text order_status
+        int declared_count
+        int verified_count
+        timestamptz submitted_at
+        timestamptz received_at
+        int received_by FK
+        timestamptz ready_at
+        timestamptz collected_at
+        int collected_by FK
+    }
+    FINES {
+        int order_id PK,FK
+        numeric fine_amount
+        text fine_status "UNPAID PAID WAIVED"
+        timestamptz fine_paid_at
+        int waived_by FK
+        text waiver_reason
+    }
+    ORDER_CHANGES {
+        int order_id PK,FK
+        int change_no PK
+        timestamptz changed_at
+        int changed_by FK
+        text field_changed
+        text old_value
+        text new_value
+        text reason
+    }
+
+    STUDENTS ||--o{ ORDERS : "places"
+    POLICIES |o--o{ ORDERS : "fine rule for"
+    ORDERS ||--o| FINES : "may have"
+    ORDERS ||--o{ ORDER_CHANGES : "corrected by"
+    STAFF |o--o{ STUDENTS : "verifies bag of"
+    STAFF |o--o{ ORDERS : "receives"
+    STAFF |o--o{ ORDERS : "hands over"
+    STAFF |o--o{ FINES : "waives"
+    STAFF ||--o{ ORDER_CHANGES : "makes"

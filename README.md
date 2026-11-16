@@ -17,6 +17,7 @@ The website itself (the AP capstone) is a separate repository, [parth-access/Lau
 | File | Content |
 | --- | --- |
 | `01_normalization.md` | From the paper register (unnormalized) to 1NF, 2NF, 3NF and BCNF, with the final six tables and the deliberate exceptions |
+| `02_er_diagram.png` | ER diagram of the six tables: keys, foreign keys and crow's-foot cardinality (source: `02_er_diagram.mmd`, Mermaid) |
 | `03_schema.sql` | The PostgreSQL schema: six tables with keys, CHECK constraints, indexes and the starting policy (10 free, Rs 5 per extra) |
 
 The ER diagram, the queries (`04_queries.sql`) and their analysis will be added here as they are finished.
