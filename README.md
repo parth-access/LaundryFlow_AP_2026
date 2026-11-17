@@ -19,8 +19,9 @@ The website itself (the AP capstone) is a separate repository, [parth-access/Lau
 | `01_normalization.md` | From the paper register (unnormalized) to 1NF, 2NF, 3NF and BCNF, with the final six tables and the deliberate exceptions |
 | `02_er_diagram.png` | ER diagram of the six tables: keys, foreign keys and crow's-foot cardinality (source: `02_er_diagram.mmd`, Mermaid) |
 | `03_schema.sql` | The PostgreSQL schema: six tables with keys, CHECK constraints, indexes and the starting policy (10 free, Rs 5 per extra) |
+| `04_queries.sql` | Every SQL query the LaundryFlow app runs (R = read, W = write), with its purpose and parameters; exported from the app with `npm run queries:export` |
 
-The ER diagram, the queries (`04_queries.sql`) and their analysis will be added here as they are finished.
+The query analysis (`05_query_timings.md`, `plans/`) will be added for CP4.
 
 ## Team (Team T0016, Section E)
 
