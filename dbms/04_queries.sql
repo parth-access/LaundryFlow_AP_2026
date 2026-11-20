@@ -16,7 +16,7 @@ ORDER BY bag_prefix;
 -- Everything a student has submitted that no staff member has counted yet, oldest first.
 -- Parameters: none
 SELECT o.order_id, o.submitted_at, o.declared_count,
-       s.bag_prefix, s.bag_number, s.full_name
+       s.student_id, s.bag_prefix, s.bag_number, s.full_name, s.bag_verified_at
 FROM orders o
 JOIN students s ON s.student_id = o.student_id
 WHERE o.order_status = 'SUBMITTED'
@@ -72,6 +72,44 @@ WHERE student_id = $1
   AND order_status IN ('SUBMITTED', 'RECEIVED', 'READY')
 LIMIT 1;
 
+-- R11: One of a student's orders, with its fine
+-- Order detail page for a student. Filtering on student_id as well as order_id means a student can only ever open their own orders, even by editing the URL.
+-- Parameters: $1 = order_id, $2 = student_id
+SELECT o.order_id, o.order_status, o.declared_count, o.verified_count,
+       o.submitted_at, o.received_at, o.ready_at, o.collected_at,
+       f.fine_amount, f.fine_status, f.fine_paid_at, f.waiver_reason,
+       p.free_limit, p.fine_per_extra
+FROM orders o
+LEFT JOIN fines f    ON f.order_id = o.order_id
+LEFT JOIN policies p ON p.policy_id = o.policy_id
+WHERE o.order_id = $1
+  AND o.student_id = $2;
+
+-- R12: A student's fines
+-- My fines page: every fine on this student's orders, unpaid first, then newest. Filtered on student_id through the join, so a student only ever sees their own.
+-- Parameters: $1 = student_id
+SELECT f.order_id, f.fine_amount, f.fine_status, f.fine_paid_at, f.waiver_reason,
+       o.verified_count, o.received_at, p.free_limit, p.fine_per_extra
+FROM fines f
+JOIN orders o   ON o.order_id = f.order_id
+JOIN policies p ON p.policy_id = o.policy_id
+WHERE o.student_id = $1
+ORDER BY (f.fine_status = 'UNPAID') DESC, o.received_at DESC;
+
+-- R13: A student's laundry in numbers
+-- Profile page: how many bags were washed, how many clothes, fines paid, and the average time from handing in to ready. One pass over the student's orders with FILTER clauses; cancelled orders are left out. count(*) FILTER always returns a row, even for a brand-new student with no orders.
+-- Parameters: $1 = student_id
+SELECT count(*) FILTER (WHERE o.order_status <> 'CANCELLED')::int                         AS bags,
+       count(*) FILTER (WHERE o.order_status = 'COLLECTED')::int                          AS collected,
+       coalesce(sum(o.verified_count) FILTER (WHERE o.order_status <> 'CANCELLED'), 0)::int AS clothes,
+       coalesce(sum(f.fine_amount) FILTER (WHERE f.fine_status = 'PAID'), 0)              AS fines_paid,
+       round(avg(extract(epoch FROM o.ready_at - o.submitted_at) / 3600)
+             FILTER (WHERE o.ready_at IS NOT NULL))::int                                  AS avg_hours_to_ready,
+       min(o.submitted_at)                                                                AS first_hand_in
+FROM orders o
+LEFT JOIN fines f ON f.order_id = o.order_id
+WHERE o.student_id = $1;
+
 -- W10: Submit order if no active order exists
 -- Atomically checks for an active order and inserts a new order if none exists.
 -- Parameters: $1 = student_id, $2 = declared_count
@@ -85,6 +123,26 @@ WHERE NOT EXISTS (
 )
 ON CONFLICT DO NOTHING
 RETURNING order_id, submitted_at;
+
+-- W11: Cancel a hand-in
+-- A student cancels an order they handed in by mistake. Only while it is still SUBMITTED (staff have not counted it yet), and only their own order: both rules are in the WHERE, so a forged form changes nothing. Zero rows back means it was already counted or is not theirs.
+-- Parameters: $1 = order_id, $2 = student_id
+UPDATE orders
+SET order_status = 'CANCELLED'
+WHERE order_id = $1
+  AND student_id = $2
+  AND order_status = 'SUBMITTED'
+RETURNING order_id;
+
+-- W12: Change the clothes count on a hand-in
+-- A student fixes the number they typed, only while the order is still SUBMITTED and only on their own order. Once staff count the bag, verified_count is what matters, so changing declared_count later is blocked.
+-- Parameters: $1 = order_id, $2 = student_id, $3 = declared_count
+UPDATE orders
+SET declared_count = $3
+WHERE order_id = $1
+  AND student_id = $2
+  AND order_status = 'SUBMITTED'
+RETURNING order_id, declared_count;
 
 -- R20: Current fine policy
 -- Counter receipt: returns the latest fine policy effective on the receipt date. The date is taken in India time, because the database server runs in UTC.
@@ -126,6 +184,16 @@ WHERE student_id = $1
   AND bag_verified_at IS NULL
 RETURNING student_id, bag_verified_at;
 
+-- R23: One order with its student, for the receive page
+-- The counter opens one order to count it. Includes the student's bag tag and whether the tag has been verified, so staff can verify it on the first drop-off.
+-- Parameters: $1 = order_id
+SELECT o.order_id, o.order_status, o.declared_count, o.verified_count,
+       o.submitted_at, o.received_at, o.ready_at, o.collected_at,
+       s.student_id, s.full_name, s.enrollment_no, s.bag_prefix, s.bag_number, s.bag_verified_at
+FROM orders o
+JOIN students s ON s.student_id = o.student_id
+WHERE o.order_id = $1;
+
 -- R30: Unpaid fines
 -- Every fine not yet paid or waived, oldest first, with the student's bag tag. Uses the partial index ix_fines_unpaid.
 -- Parameters: none
@@ -148,13 +216,41 @@ WHERE o.order_status = 'RECEIVED'
 ORDER BY o.received_at;
 
 -- R32: Orders waiting for pickup
--- Lists all ready orders waiting to be collected by students, with their bag tag and ready time.
+-- Lists all ready orders waiting to be collected by students, with their bag tag and ready time. days_waiting counts whole days since the bag was marked ready, in India time, so staff can chase old bags.
 -- Parameters: none
 SELECT o.order_id, o.verified_count, o.ready_at,
+       ((now() AT TIME ZONE 'Asia/Kolkata')::date - (o.ready_at AT TIME ZONE 'Asia/Kolkata')::date) AS days_waiting,
        s.bag_prefix, s.bag_number, s.full_name
 FROM orders o
 JOIN students s ON s.student_id = o.student_id
 WHERE o.order_status = 'READY'
+ORDER BY o.ready_at;
+
+-- R33: Settled fines (history)
+-- The last 50 fines that were paid or waived, newest first, so an admin can check who was let off and why. LEFT JOIN staff because only waived fines have a waived_by.
+-- Parameters: none
+SELECT f.order_id, f.fine_amount, f.fine_status, f.fine_paid_at, f.waiver_reason,
+       o.received_at, s.bag_prefix, s.bag_number, s.full_name,
+       w.full_name AS waived_by_name
+FROM fines f
+JOIN orders o ON o.order_id = f.order_id
+JOIN students s ON s.student_id = o.student_id
+LEFT JOIN staff w ON w.staff_id = f.waived_by
+WHERE f.fine_status IN ('PAID', 'WAIVED')
+ORDER BY coalesce(f.fine_paid_at, o.received_at) DESC
+LIMIT 50;
+
+-- R34: Find a bag waiting for pickup
+-- Pickup search: ready bags with this bag number, optionally only B or G. Used when a student walks up and says their number, instead of scrolling the whole list.
+-- Parameters: $1 = bag_number, $2 = bag_prefix_or_null
+SELECT o.order_id, o.verified_count, o.ready_at,
+       ((now() AT TIME ZONE 'Asia/Kolkata')::date - (o.ready_at AT TIME ZONE 'Asia/Kolkata')::date) AS days_waiting,
+       s.bag_prefix, s.bag_number, s.full_name
+FROM orders o
+JOIN students s ON s.student_id = o.student_id
+WHERE o.order_status = 'READY'
+  AND s.bag_number = $1
+  AND ($2::char(1) IS NULL OR s.bag_prefix = $2)
 ORDER BY o.ready_at;
 
 -- W30: Mark order ready
@@ -199,6 +295,34 @@ WHERE order_id = $1
   AND fine_status = 'UNPAID'
 RETURNING order_id;
 
+-- W35: Mark several orders ready
+-- Marks every listed order READY in one statement, when a whole machine load finishes. One UPDATE is atomic, so either all qualifying bags change or none do. Bags no longer RECEIVED (someone else already moved them) are skipped; RETURNING says which changed.
+-- Parameters: $1 = order_ids
+UPDATE orders
+SET order_status = 'READY',
+    ready_at = now()
+WHERE order_id = ANY($1::int[])
+  AND order_status = 'RECEIVED'
+RETURNING order_id;
+
+-- W34: Undo mark ready
+-- Moves a READY order back to RECEIVED when staff pressed Mark ready by mistake, and records the change in order_changes in the same statement (a CTE), so the undo and its audit row succeed or fail together. Only READY orders qualify, so a collected bag can never be undone. change_no is the next number for that order.
+-- Parameters: $1 = order_id, $2 = staff_id, $3 = reason
+WITH undone AS (
+  UPDATE orders
+  SET order_status = 'RECEIVED',
+      ready_at = NULL
+  WHERE order_id = $1
+    AND order_status = 'READY'
+  RETURNING order_id
+)
+INSERT INTO order_changes (order_id, change_no, changed_by, field_changed, old_value, new_value, reason)
+SELECT u.order_id,
+       coalesce((SELECT max(c.change_no) FROM order_changes c WHERE c.order_id = u.order_id), 0) + 1,
+       $2, 'order_status', 'READY', 'RECEIVED', $3
+FROM undone u
+RETURNING order_id;
+
 -- R40: All staff
 -- Admin page: everyone on the staff list, active first.
 -- Parameters: none
@@ -209,6 +333,42 @@ ORDER BY is_active DESC, full_name;
 -- R41: Fine policy history
 -- Admin page: every fine rule, newest first. Rules are never edited; a change is a new row, so each order keeps the rule it was counted under (orders.policy_id).
 -- Parameters: none
-SELECT policy_id, effective_from, free_limit, fine_per_extra
+SELECT policy_id, effective_from::text AS effective_from, free_limit, fine_per_extra
 FROM policies
 ORDER BY effective_from DESC;
+
+-- R42: Numbers at a glance
+-- Admin page: bags handed in today (India time), bags waiting to be counted, and the total of unpaid fines. One row, three scalar subqueries.
+-- Parameters: none
+SELECT
+  (SELECT count(*)::int FROM orders
+     WHERE (submitted_at AT TIME ZONE 'Asia/Kolkata')::date = (now() AT TIME ZONE 'Asia/Kolkata')::date) AS orders_today,
+  (SELECT count(*)::int FROM orders WHERE order_status = 'SUBMITTED') AS waiting,
+  (SELECT count(*)::int FROM fines WHERE fine_status = 'UNPAID') AS unpaid_count,
+  (SELECT coalesce(sum(fine_amount), 0) FROM fines WHERE fine_status = 'UNPAID') AS unpaid_total;
+
+-- W40: Add staff
+-- Admin adds a laundry staff member by their Google email. The email is stored lowercase (the table CHECK enforces it). ON CONFLICT DO NOTHING: an email already on the list returns no row, so the page can say so.
+-- Parameters: $1 = full_name, $2 = email, $3 = role
+INSERT INTO staff (full_name, email, role)
+VALUES ($1, lower($2), $3)
+ON CONFLICT (email) DO NOTHING
+RETURNING staff_id;
+
+-- W41: Deactivate or reactivate staff
+-- Turns a staff account off or back on. Accounts are never deleted, because collected orders point at the staff member. The WHERE stops an admin from switching off their own account ($3 is the admin's own staff_id).
+-- Parameters: $1 = staff_id, $2 = is_active, $3 = own_staff_id
+UPDATE staff
+SET is_active = $2
+WHERE staff_id = $1
+  AND staff_id <> $3
+RETURNING staff_id;
+
+-- W42: New fine policy
+-- Adds a new fine rule from a date onwards. Old rules are never edited, so past orders keep the rule they were counted under. The date cannot be in the past (India time), and only one rule per date (UNIQUE).
+-- Parameters: $1 = effective_from, $2 = free_limit, $3 = fine_per_extra
+INSERT INTO policies (effective_from, free_limit, fine_per_extra)
+SELECT $1::date, $2, $3
+WHERE $1::date >= (now() AT TIME ZONE 'Asia/Kolkata')::date
+ON CONFLICT (effective_from) DO NOTHING
+RETURNING policy_id;
