@@ -4,13 +4,22 @@
 -- $1, $2... are parameters supplied by the application.
 
 -- R01: Find bags by number
--- The counter staff type 1054 and pick B 1054 or G 1054 from the list. The prefix is part of the bag tag, so one number can match two students.
+-- The counter staff type 1054 and pick B 1054 or G 1054 from the list. The prefix is part of the bag tag, so one number can match two students. The LEFT JOIN LATERAL adds each student's open order (at most one, by the partial unique index), so staff see where the bag is: waiting to be counted, in the wash, or ready for pickup.
 -- Parameters: $1 = bag_number
-SELECT student_id, bag_prefix, bag_number, full_name
-FROM students
-WHERE bag_number = $1
-  AND is_active
-ORDER BY bag_prefix;
+SELECT s.student_id, s.bag_prefix, s.bag_number, s.full_name,
+       o.order_id, o.order_status
+FROM students s
+LEFT JOIN LATERAL (
+  SELECT order_id, order_status
+  FROM orders
+  WHERE student_id = s.student_id
+    AND order_status IN ('SUBMITTED', 'RECEIVED', 'READY')
+  ORDER BY submitted_at DESC
+  LIMIT 1
+) o ON true
+WHERE s.bag_number = $1
+  AND s.is_active
+ORDER BY s.bag_prefix;
 
 -- R02: Counter queue: orders waiting to be received
 -- Everything a student has submitted that no staff member has counted yet, oldest first.
