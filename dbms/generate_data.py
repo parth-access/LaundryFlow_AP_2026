@@ -18,8 +18,11 @@ from datetime import datetime, timedelta, timezone
 SEED = 2026
 N_STAFF = 12
 N_STUDENTS = 2000
-N_ORDERS = 50_000            # TODO: use this in make_orders()
-START = datetime(2026, 1, 5, tzinfo=timezone(timedelta(hours=5, minutes=30)))
+N_ORDERS = 50_000            # about 25 bags per student over the term
+IST = timezone(timedelta(hours=5, minutes=30))
+START = datetime(2026, 1, 5, tzinfo=IST)
+NOW = datetime(2026, 11, 23, 20, 0, tzinfo=IST)   # "today" in the data: open orders are the recent ones
+FREE_LIMIT, FINE_PER_EXTRA = 10, 5                  # policy 1 in 03_schema.sql
 
 rng = random.Random(SEED)
 FIRST = ["Aman", "Riya", "Kabir", "Meera", "Arjun", "Isha", "Rohan", "Ananya", "Vikram", "Sneha", "Dev", "Pooja", "Karan", "Nisha", "Aditya", "Tanvi"]
