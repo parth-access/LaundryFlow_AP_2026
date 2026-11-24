@@ -39,10 +39,15 @@ def q(value):
     return "'" + str(value).replace("'", "''") + "'"
 
 
-def insert(table, cols, rows, batch=1000):
+def insert(table, cols, rows, batch=1000, overriding=False):
+    over = " OVERRIDING SYSTEM VALUE" if overriding else ""
     for i in range(0, len(rows), batch):
         values = ",\n".join("(" + ", ".join(q(v) for v in r) + ")" for r in rows[i:i + batch])
-        print(f"INSERT INTO {table} ({', '.join(cols)}) VALUES\n{values};")
+        print(f"INSERT INTO {table} ({', '.join(cols)}){over} VALUES\n{values};")
+
+
+def ts(moment):
+    return None if moment is None else moment.isoformat()
 
 
 def make_staff():
