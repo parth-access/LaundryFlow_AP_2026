@@ -21,8 +21,10 @@ The website itself (the AP capstone) is a separate repository, [parth-access/Lau
 | `03_schema.sql` | The PostgreSQL schema: six tables with keys, CHECK constraints, indexes and the starting policy (10 free, Rs 5 per extra) |
 | `04_queries.sql` | Every SQL query the LaundryFlow app runs (R = read, W = write), with its purpose and parameters; exported from the app with `npm run queries:export` |
 | `generate_data.py` | Large test dataset for the query timings: 2,000 students, ~48,800 orders as one timeline per student (never two open bags), ~14,200 fines and ~1,400 recount records. Same seed = same rows for everyone. `python3 dbms/generate_data.py > /tmp/lf.sql`, then load it after `03_schema.sql` |
+| `time_queries.py` | Times every query in `04_queries.sql` 5 times on the large dataset with `EXPLAIN (ANALYZE, BUFFERS)`; writes are rolled back |
+| `05_query_timings.md` | Timings of all 36 queries on the large dataset, how the indexes are used, the slowest queries and a tested fix for R42 |
+| `plans/` | The plan of every run, and `summary.csv` |
 
-The query analysis (`05_query_timings.md`, `plans/`) will be added for CP4.
 
 ## Team (Team T0016, Section E)
 
