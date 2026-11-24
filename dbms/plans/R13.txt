@@ -1,0 +1,82 @@
+-- R13: A student's laundry in numbers
+-- parameters: ['1']
+
+=== R13 run 1 ===
+Aggregate  (cost=221.05..221.08 rows=1 width=56) (actual time=0.072..0.072 rows=1 loops=1)
+  Buffers: shared hit=61
+  ->  Nested Loop Left Join  (cost=0.57..220.27 rows=24 width=39) (actual time=0.020..0.044 rows=25 loops=1)
+        Buffers: shared hit=61
+        ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=33) (actual time=0.011..0.014 rows=25 loops=1)
+              Index Cond: (student_id = 1)
+              Buffers: shared hit=3
+        ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=14) (actual time=0.001..0.001 rows=0 loops=25)
+              Index Cond: (order_id = o.order_id)
+              Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=315
+Planning Time: 0.738 ms
+Execution Time: 0.115 ms
+
+=== R13 run 2 ===
+Aggregate  (cost=221.05..221.08 rows=1 width=56) (actual time=0.071..0.071 rows=1 loops=1)
+  Buffers: shared hit=61
+  ->  Nested Loop Left Join  (cost=0.57..220.27 rows=24 width=39) (actual time=0.019..0.043 rows=25 loops=1)
+        Buffers: shared hit=61
+        ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=33) (actual time=0.009..0.012 rows=25 loops=1)
+              Index Cond: (student_id = 1)
+              Buffers: shared hit=3
+        ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=14) (actual time=0.001..0.001 rows=0 loops=25)
+              Index Cond: (order_id = o.order_id)
+              Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=315
+Planning Time: 0.696 ms
+Execution Time: 0.115 ms
+
+=== R13 run 3 ===
+Aggregate  (cost=221.05..221.08 rows=1 width=56) (actual time=0.063..0.064 rows=1 loops=1)
+  Buffers: shared hit=61
+  ->  Nested Loop Left Join  (cost=0.57..220.27 rows=24 width=39) (actual time=0.016..0.039 rows=25 loops=1)
+        Buffers: shared hit=61
+        ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=33) (actual time=0.009..0.011 rows=25 loops=1)
+              Index Cond: (student_id = 1)
+              Buffers: shared hit=3
+        ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=14) (actual time=0.001..0.001 rows=0 loops=25)
+              Index Cond: (order_id = o.order_id)
+              Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=315
+Planning Time: 0.688 ms
+Execution Time: 0.102 ms
+
+=== R13 run 4 ===
+Aggregate  (cost=221.05..221.08 rows=1 width=56) (actual time=0.066..0.067 rows=1 loops=1)
+  Buffers: shared hit=61
+  ->  Nested Loop Left Join  (cost=0.57..220.27 rows=24 width=39) (actual time=0.018..0.041 rows=25 loops=1)
+        Buffers: shared hit=61
+        ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=33) (actual time=0.009..0.011 rows=25 loops=1)
+              Index Cond: (student_id = 1)
+              Buffers: shared hit=3
+        ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=14) (actual time=0.001..0.001 rows=0 loops=25)
+              Index Cond: (order_id = o.order_id)
+              Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=315
+Planning Time: 0.706 ms
+Execution Time: 0.106 ms
+
+=== R13 run 5 ===
+Aggregate  (cost=221.05..221.08 rows=1 width=56) (actual time=0.064..0.065 rows=1 loops=1)
+  Buffers: shared hit=61
+  ->  Nested Loop Left Join  (cost=0.57..220.27 rows=24 width=39) (actual time=0.017..0.039 rows=25 loops=1)
+        Buffers: shared hit=61
+        ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=33) (actual time=0.009..0.012 rows=25 loops=1)
+              Index Cond: (student_id = 1)
+              Buffers: shared hit=3
+        ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=14) (actual time=0.001..0.001 rows=0 loops=25)
+              Index Cond: (order_id = o.order_id)
+              Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=315
+Planning Time: 0.646 ms
+Execution Time: 0.103 ms

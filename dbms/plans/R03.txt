@@ -1,0 +1,72 @@
+-- R03: A student's orders with fines
+-- parameters: ['1']
+
+=== R03 run 1 ===
+Nested Loop Left Join  (cost=0.57..220.27 rows=24 width=63) (actual time=0.024..0.056 rows=25 loops=1)
+  Buffers: shared hit=61
+  ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=53) (actual time=0.014..0.017 rows=25 loops=1)
+        Index Cond: (student_id = 1)
+        Buffers: shared hit=3
+  ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=14) (actual time=0.001..0.001 rows=0 loops=25)
+        Index Cond: (order_id = o.order_id)
+        Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=310
+Planning Time: 0.869 ms
+Execution Time: 0.091 ms
+
+=== R03 run 2 ===
+Nested Loop Left Join  (cost=0.57..220.27 rows=24 width=63) (actual time=0.017..0.039 rows=25 loops=1)
+  Buffers: shared hit=61
+  ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=53) (actual time=0.010..0.012 rows=25 loops=1)
+        Index Cond: (student_id = 1)
+        Buffers: shared hit=3
+  ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=14) (actual time=0.001..0.001 rows=0 loops=25)
+        Index Cond: (order_id = o.order_id)
+        Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=310
+Planning Time: 0.623 ms
+Execution Time: 0.068 ms
+
+=== R03 run 3 ===
+Nested Loop Left Join  (cost=0.57..220.27 rows=24 width=63) (actual time=0.018..0.040 rows=25 loops=1)
+  Buffers: shared hit=61
+  ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=53) (actual time=0.009..0.012 rows=25 loops=1)
+        Index Cond: (student_id = 1)
+        Buffers: shared hit=3
+  ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=14) (actual time=0.001..0.001 rows=0 loops=25)
+        Index Cond: (order_id = o.order_id)
+        Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=310
+Planning Time: 0.607 ms
+Execution Time: 0.070 ms
+
+=== R03 run 4 ===
+Nested Loop Left Join  (cost=0.57..220.27 rows=24 width=63) (actual time=0.016..0.038 rows=25 loops=1)
+  Buffers: shared hit=61
+  ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=53) (actual time=0.010..0.012 rows=25 loops=1)
+        Index Cond: (student_id = 1)
+        Buffers: shared hit=3
+  ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=14) (actual time=0.001..0.001 rows=0 loops=25)
+        Index Cond: (order_id = o.order_id)
+        Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=310
+Planning Time: 0.577 ms
+Execution Time: 0.066 ms
+
+=== R03 run 5 ===
+Nested Loop Left Join  (cost=0.57..220.27 rows=24 width=63) (actual time=0.015..0.037 rows=25 loops=1)
+  Buffers: shared hit=61
+  ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=53) (actual time=0.009..0.012 rows=25 loops=1)
+        Index Cond: (student_id = 1)
+        Buffers: shared hit=3
+  ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=14) (actual time=0.001..0.001 rows=0 loops=25)
+        Index Cond: (order_id = o.order_id)
+        Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=310
+Planning Time: 0.561 ms
+Execution Time: 0.064 ms

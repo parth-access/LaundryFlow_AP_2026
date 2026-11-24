@@ -1,0 +1,47 @@
+-- W21: Create an unpaid fine
+-- parameters: ['977', '15']
+
+=== W21 run 1 ===
+Insert on fines  (cost=0.00..0.01 rows=1 width=94) (actual time=0.230..0.231 rows=1 loops=1)
+  Buffers: shared hit=74
+  ->  Result  (cost=0.00..0.01 rows=1 width=94) (actual time=0.001..0.002 rows=1 loops=1)
+Planning Time: 0.068 ms
+Trigger for constraint fines_order_id_fkey: time=0.564 calls=1
+Trigger for constraint fines_waived_by_fkey: time=0.039 calls=1
+Execution Time: 0.855 ms
+
+=== W21 run 2 ===
+Insert on fines  (cost=0.00..0.01 rows=1 width=94) (actual time=0.222..0.223 rows=1 loops=1)
+  Buffers: shared hit=74
+  ->  Result  (cost=0.00..0.01 rows=1 width=94) (actual time=0.001..0.001 rows=1 loops=1)
+Planning Time: 0.059 ms
+Trigger for constraint fines_order_id_fkey: time=0.585 calls=1
+Trigger for constraint fines_waived_by_fkey: time=0.041 calls=1
+Execution Time: 0.869 ms
+
+=== W21 run 3 ===
+Insert on fines  (cost=0.00..0.01 rows=1 width=94) (actual time=0.237..0.238 rows=1 loops=1)
+  Buffers: shared hit=74
+  ->  Result  (cost=0.00..0.01 rows=1 width=94) (actual time=0.001..0.001 rows=1 loops=1)
+Planning Time: 0.055 ms
+Trigger for constraint fines_order_id_fkey: time=0.572 calls=1
+Trigger for constraint fines_waived_by_fkey: time=0.050 calls=1
+Execution Time: 0.881 ms
+
+=== W21 run 4 ===
+Insert on fines  (cost=0.00..0.01 rows=1 width=94) (actual time=0.204..0.205 rows=1 loops=1)
+  Buffers: shared hit=74
+  ->  Result  (cost=0.00..0.01 rows=1 width=94) (actual time=0.001..0.001 rows=1 loops=1)
+Planning Time: 0.053 ms
+Trigger for constraint fines_order_id_fkey: time=0.635 calls=1
+Trigger for constraint fines_waived_by_fkey: time=0.042 calls=1
+Execution Time: 0.900 ms
+
+=== W21 run 5 ===
+Insert on fines  (cost=0.00..0.01 rows=1 width=94) (actual time=0.233..0.234 rows=1 loops=1)
+  Buffers: shared hit=74
+  ->  Result  (cost=0.00..0.01 rows=1 width=94) (actual time=0.001..0.001 rows=1 loops=1)
+Planning Time: 0.054 ms
+Trigger for constraint fines_order_id_fkey: time=0.507 calls=1
+Trigger for constraint fines_waived_by_fkey: time=0.089 calls=1
+Execution Time: 0.849 ms

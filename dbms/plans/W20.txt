@@ -1,0 +1,72 @@
+-- W20: Receive a submitted order
+-- parameters: ['1715', '13', '2', '1']
+
+=== W20 run 1 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=58) (actual time=0.401..0.403 rows=1 loops=1)
+  Buffers: shared hit=53
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=58) (actual time=0.018..0.020 rows=1 loops=1)
+        Index Cond: (order_id = 1715)
+        Filter: (order_status = 'SUBMITTED'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.556 ms
+Trigger for constraint orders_policy_id_fkey: time=0.279 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.146 calls=1
+Execution Time: 0.882 ms
+
+=== W20 run 2 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=58) (actual time=0.335..0.338 rows=1 loops=1)
+  Buffers: shared hit=54
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=58) (actual time=0.027..0.028 rows=1 loops=1)
+        Index Cond: (order_id = 1715)
+        Filter: (order_status = 'SUBMITTED'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.535 ms
+Trigger for constraint orders_policy_id_fkey: time=0.243 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.143 calls=1
+Execution Time: 0.781 ms
+
+=== W20 run 3 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=58) (actual time=0.331..0.334 rows=1 loops=1)
+  Buffers: shared hit=54
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=58) (actual time=0.027..0.029 rows=1 loops=1)
+        Index Cond: (order_id = 1715)
+        Filter: (order_status = 'SUBMITTED'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.451 ms
+Trigger for constraint orders_policy_id_fkey: time=0.231 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.121 calls=1
+Execution Time: 0.808 ms
+
+=== W20 run 4 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=58) (actual time=0.290..0.292 rows=1 loops=1)
+  Buffers: shared hit=54
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=58) (actual time=0.023..0.024 rows=1 loops=1)
+        Index Cond: (order_id = 1715)
+        Filter: (order_status = 'SUBMITTED'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.507 ms
+Trigger for constraint orders_policy_id_fkey: time=0.203 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.123 calls=1
+Execution Time: 0.665 ms
+
+=== W20 run 5 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=58) (actual time=0.312..0.314 rows=1 loops=1)
+  Buffers: shared hit=54
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=58) (actual time=0.023..0.025 rows=1 loops=1)
+        Index Cond: (order_id = 1715)
+        Filter: (order_status = 'SUBMITTED'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.458 ms
+Trigger for constraint orders_policy_id_fkey: time=0.201 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.118 calls=1
+Execution Time: 0.689 ms

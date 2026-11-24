@@ -1,0 +1,52 @@
+-- R05: Find an active staff member by email
+-- parameters: ['staff2@laundry.example']
+
+=== R05 run 1 ===
+Seq Scan on staff  (cost=0.00..1.15 rows=1 width=49) (actual time=0.008..0.009 rows=1 loops=1)
+  Filter: (is_active AND (email = 'staff2@laundry.example'::text))
+  Rows Removed by Filter: 11
+  Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=97
+Planning Time: 0.255 ms
+Execution Time: 0.038 ms
+
+=== R05 run 2 ===
+Seq Scan on staff  (cost=0.00..1.15 rows=1 width=49) (actual time=0.008..0.009 rows=1 loops=1)
+  Filter: (is_active AND (email = 'staff2@laundry.example'::text))
+  Rows Removed by Filter: 11
+  Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=97
+Planning Time: 0.265 ms
+Execution Time: 0.037 ms
+
+=== R05 run 3 ===
+Seq Scan on staff  (cost=0.00..1.15 rows=1 width=49) (actual time=0.007..0.008 rows=1 loops=1)
+  Filter: (is_active AND (email = 'staff2@laundry.example'::text))
+  Rows Removed by Filter: 11
+  Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=97
+Planning Time: 0.235 ms
+Execution Time: 0.036 ms
+
+=== R05 run 4 ===
+Seq Scan on staff  (cost=0.00..1.15 rows=1 width=49) (actual time=0.009..0.011 rows=1 loops=1)
+  Filter: (is_active AND (email = 'staff2@laundry.example'::text))
+  Rows Removed by Filter: 11
+  Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=97
+Planning Time: 0.332 ms
+Execution Time: 0.046 ms
+
+=== R05 run 5 ===
+Seq Scan on staff  (cost=0.00..1.15 rows=1 width=49) (actual time=0.007..0.008 rows=1 loops=1)
+  Filter: (is_active AND (email = 'staff2@laundry.example'::text))
+  Rows Removed by Filter: 11
+  Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=97
+Planning Time: 0.223 ms
+Execution Time: 0.036 ms

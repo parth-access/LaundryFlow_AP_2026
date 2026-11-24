@@ -1,0 +1,107 @@
+-- R01: Find bags by number
+-- parameters: ['2758']
+
+=== R01 run 1 ===
+Nested Loop Left Join  (cost=8.45..16.50 rows=1 width=34) (actual time=0.062..0.072 rows=2 loops=1)
+  Buffers: shared hit=10
+  ->  Index Scan using ix_students_bag_number on students s  (cost=0.28..8.29 rows=1 width=21) (actual time=0.025..0.030 rows=2 loops=1)
+        Index Cond: (bag_number = 2758)
+        Filter: is_active
+        Buffers: shared hit=4
+  ->  Limit  (cost=8.18..8.18 rows=1 width=21) (actual time=0.019..0.019 rows=0 loops=2)
+        Buffers: shared hit=6
+        ->  Sort  (cost=8.18..8.18 rows=1 width=21) (actual time=0.018..0.018 rows=0 loops=2)
+              Sort Key: orders.submitted_at DESC
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=6
+              ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=21) (actual time=0.005..0.005 rows=0 loops=2)
+                    Index Cond: (student_id = s.student_id)
+                    Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=319
+Planning Time: 0.925 ms
+Execution Time: 0.109 ms
+
+=== R01 run 2 ===
+Nested Loop Left Join  (cost=8.45..16.50 rows=1 width=34) (actual time=0.037..0.043 rows=2 loops=1)
+  Buffers: shared hit=10
+  ->  Index Scan using ix_students_bag_number on students s  (cost=0.28..8.29 rows=1 width=21) (actual time=0.015..0.018 rows=2 loops=1)
+        Index Cond: (bag_number = 2758)
+        Filter: is_active
+        Buffers: shared hit=4
+  ->  Limit  (cost=8.18..8.18 rows=1 width=21) (actual time=0.011..0.011 rows=0 loops=2)
+        Buffers: shared hit=6
+        ->  Sort  (cost=8.18..8.18 rows=1 width=21) (actual time=0.011..0.011 rows=0 loops=2)
+              Sort Key: orders.submitted_at DESC
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=6
+              ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=21) (actual time=0.003..0.003 rows=0 loops=2)
+                    Index Cond: (student_id = s.student_id)
+                    Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=319
+Planning Time: 0.613 ms
+Execution Time: 0.068 ms
+
+=== R01 run 3 ===
+Nested Loop Left Join  (cost=8.45..16.50 rows=1 width=34) (actual time=0.048..0.055 rows=2 loops=1)
+  Buffers: shared hit=10
+  ->  Index Scan using ix_students_bag_number on students s  (cost=0.28..8.29 rows=1 width=21) (actual time=0.021..0.024 rows=2 loops=1)
+        Index Cond: (bag_number = 2758)
+        Filter: is_active
+        Buffers: shared hit=4
+  ->  Limit  (cost=8.18..8.18 rows=1 width=21) (actual time=0.013..0.014 rows=0 loops=2)
+        Buffers: shared hit=6
+        ->  Sort  (cost=8.18..8.18 rows=1 width=21) (actual time=0.013..0.013 rows=0 loops=2)
+              Sort Key: orders.submitted_at DESC
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=6
+              ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=21) (actual time=0.003..0.003 rows=0 loops=2)
+                    Index Cond: (student_id = s.student_id)
+                    Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=319
+Planning Time: 0.840 ms
+Execution Time: 0.084 ms
+
+=== R01 run 4 ===
+Nested Loop Left Join  (cost=8.45..16.50 rows=1 width=34) (actual time=0.064..0.075 rows=2 loops=1)
+  Buffers: shared hit=10
+  ->  Index Scan using ix_students_bag_number on students s  (cost=0.28..8.29 rows=1 width=21) (actual time=0.028..0.033 rows=2 loops=1)
+        Index Cond: (bag_number = 2758)
+        Filter: is_active
+        Buffers: shared hit=4
+  ->  Limit  (cost=8.18..8.18 rows=1 width=21) (actual time=0.019..0.019 rows=0 loops=2)
+        Buffers: shared hit=6
+        ->  Sort  (cost=8.18..8.18 rows=1 width=21) (actual time=0.018..0.018 rows=0 loops=2)
+              Sort Key: orders.submitted_at DESC
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=6
+              ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=21) (actual time=0.005..0.005 rows=0 loops=2)
+                    Index Cond: (student_id = s.student_id)
+                    Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=319
+Planning Time: 1.073 ms
+Execution Time: 0.113 ms
+
+=== R01 run 5 ===
+Nested Loop Left Join  (cost=8.45..16.50 rows=1 width=34) (actual time=0.037..0.042 rows=2 loops=1)
+  Buffers: shared hit=10
+  ->  Index Scan using ix_students_bag_number on students s  (cost=0.28..8.29 rows=1 width=21) (actual time=0.014..0.016 rows=2 loops=1)
+        Index Cond: (bag_number = 2758)
+        Filter: is_active
+        Buffers: shared hit=4
+  ->  Limit  (cost=8.18..8.18 rows=1 width=21) (actual time=0.012..0.012 rows=0 loops=2)
+        Buffers: shared hit=6
+        ->  Sort  (cost=8.18..8.18 rows=1 width=21) (actual time=0.011..0.011 rows=0 loops=2)
+              Sort Key: orders.submitted_at DESC
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=6
+              ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=21) (actual time=0.003..0.004 rows=0 loops=2)
+                    Index Cond: (student_id = s.student_id)
+                    Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=319
+Planning Time: 0.587 ms
+Execution Time: 0.066 ms

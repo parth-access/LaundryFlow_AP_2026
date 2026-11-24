@@ -1,0 +1,62 @@
+-- W30: Mark order ready
+-- parameters: ['99']
+
+=== W30 run 1 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.263..0.265 rows=1 loops=1)
+  Buffers: shared hit=51
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.012..0.013 rows=1 loops=1)
+        Index Cond: (order_id = 99)
+        Filter: (order_status = 'RECEIVED'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=202
+Planning Time: 0.401 ms
+Execution Time: 0.309 ms
+
+=== W30 run 2 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.265..0.267 rows=1 loops=1)
+  Buffers: shared hit=54
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.018..0.020 rows=1 loops=1)
+        Index Cond: (order_id = 99)
+        Filter: (order_status = 'RECEIVED'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=202
+Planning Time: 0.443 ms
+Execution Time: 0.311 ms
+
+=== W30 run 3 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.262..0.265 rows=1 loops=1)
+  Buffers: shared hit=54
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.018..0.020 rows=1 loops=1)
+        Index Cond: (order_id = 99)
+        Filter: (order_status = 'RECEIVED'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=202
+Planning Time: 0.433 ms
+Execution Time: 0.335 ms
+
+=== W30 run 4 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.235..0.238 rows=1 loops=1)
+  Buffers: shared hit=54
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.016..0.017 rows=1 loops=1)
+        Index Cond: (order_id = 99)
+        Filter: (order_status = 'RECEIVED'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=202
+Planning Time: 0.447 ms
+Execution Time: 0.284 ms
+
+=== W30 run 5 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.236..0.238 rows=1 loops=1)
+  Buffers: shared hit=54
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.015..0.017 rows=1 loops=1)
+        Index Cond: (order_id = 99)
+        Filter: (order_status = 'RECEIVED'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=202
+Planning Time: 0.491 ms
+Execution Time: 0.300 ms

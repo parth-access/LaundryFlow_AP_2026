@@ -1,0 +1,147 @@
+-- W34: Undo mark ready
+-- parameters: ['1763', '2', 'Timing test']
+
+=== W34 run 1 ===
+Insert on order_changes  (cost=8.31..12.64 rows=1 width=148) (actual time=0.398..0.402 rows=1 loops=1)
+  Buffers: shared hit=69 dirtied=1 written=1
+  CTE undone
+    ->  Update on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.259..0.261 rows=1 loops=1)
+          Buffers: shared hit=50
+          ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.013..0.015 rows=1 loops=1)
+                Index Cond: (order_id = 1763)
+                Filter: (order_status = 'READY'::text)
+                Buffers: shared hit=5
+  ->  CTE Scan on undone u  (cost=0.00..4.33 rows=1 width=148) (actual time=0.277..0.279 rows=1 loops=1)
+        Buffers: shared hit=52
+        SubPlan 3
+          ->  Result  (cost=4.30..4.31 rows=1 width=4) (actual time=0.010..0.011 rows=1 loops=1)
+                Buffers: shared hit=2
+                InitPlan 2 (returns $3)
+                  ->  Limit  (cost=0.28..4.30 rows=1 width=4) (actual time=0.009..0.009 rows=0 loops=1)
+                        Buffers: shared hit=2
+                        ->  Index Only Scan Backward using order_changes_pkey on order_changes c  (cost=0.28..4.30 rows=1 width=4) (actual time=0.008..0.008 rows=0 loops=1)
+                              Index Cond: ((order_id = u.order_id) AND (change_no IS NOT NULL))
+                              Heap Fetches: 0
+                              Buffers: shared hit=2
+Planning:
+  Buffers: shared hit=253
+Planning Time: 0.656 ms
+Trigger for constraint order_changes_order_id_fkey on order_changes: time=0.135 calls=1
+Trigger for constraint order_changes_changed_by_fkey on order_changes: time=0.138 calls=1
+Execution Time: 0.744 ms
+
+=== W34 run 2 ===
+Insert on order_changes  (cost=8.31..12.64 rows=1 width=148) (actual time=0.347..0.350 rows=1 loops=1)
+  Buffers: shared hit=69
+  CTE undone
+    ->  Update on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.265..0.266 rows=1 loops=1)
+          Buffers: shared hit=51
+          ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.018..0.019 rows=1 loops=1)
+                Index Cond: (order_id = 1763)
+                Filter: (order_status = 'READY'::text)
+                Buffers: shared hit=5
+  ->  CTE Scan on undone u  (cost=0.00..4.33 rows=1 width=148) (actual time=0.292..0.294 rows=1 loops=1)
+        Buffers: shared hit=55
+        SubPlan 3
+          ->  Result  (cost=4.30..4.31 rows=1 width=4) (actual time=0.020..0.020 rows=1 loops=1)
+                Buffers: shared hit=4
+                InitPlan 2 (returns $3)
+                  ->  Limit  (cost=0.28..4.30 rows=1 width=4) (actual time=0.018..0.018 rows=0 loops=1)
+                        Buffers: shared hit=4
+                        ->  Index Only Scan Backward using order_changes_pkey on order_changes c  (cost=0.28..4.30 rows=1 width=4) (actual time=0.017..0.017 rows=0 loops=1)
+                              Index Cond: ((order_id = u.order_id) AND (change_no IS NOT NULL))
+                              Heap Fetches: 1
+                              Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=253
+Planning Time: 0.641 ms
+Trigger for constraint order_changes_order_id_fkey on order_changes: time=0.134 calls=1
+Trigger for constraint order_changes_changed_by_fkey on order_changes: time=0.197 calls=1
+Execution Time: 0.753 ms
+
+=== W34 run 3 ===
+Insert on order_changes  (cost=8.31..12.64 rows=1 width=148) (actual time=0.303..0.306 rows=1 loops=1)
+  Buffers: shared hit=69
+  CTE undone
+    ->  Update on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.232..0.233 rows=1 loops=1)
+          Buffers: shared hit=51
+          ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.019..0.020 rows=1 loops=1)
+                Index Cond: (order_id = 1763)
+                Filter: (order_status = 'READY'::text)
+                Buffers: shared hit=5
+  ->  CTE Scan on undone u  (cost=0.00..4.33 rows=1 width=148) (actual time=0.257..0.259 rows=1 loops=1)
+        Buffers: shared hit=55
+        SubPlan 3
+          ->  Result  (cost=4.30..4.31 rows=1 width=4) (actual time=0.018..0.019 rows=1 loops=1)
+                Buffers: shared hit=4
+                InitPlan 2 (returns $3)
+                  ->  Limit  (cost=0.28..4.30 rows=1 width=4) (actual time=0.017..0.017 rows=0 loops=1)
+                        Buffers: shared hit=4
+                        ->  Index Only Scan Backward using order_changes_pkey on order_changes c  (cost=0.28..4.30 rows=1 width=4) (actual time=0.016..0.016 rows=0 loops=1)
+                              Index Cond: ((order_id = u.order_id) AND (change_no IS NOT NULL))
+                              Heap Fetches: 1
+                              Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=253
+Planning Time: 0.618 ms
+Trigger for constraint order_changes_order_id_fkey on order_changes: time=0.173 calls=1
+Trigger for constraint order_changes_changed_by_fkey on order_changes: time=0.168 calls=1
+Execution Time: 0.713 ms
+
+=== W34 run 4 ===
+Insert on order_changes  (cost=8.31..12.64 rows=1 width=148) (actual time=0.324..0.327 rows=1 loops=1)
+  Buffers: shared hit=69
+  CTE undone
+    ->  Update on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.247..0.248 rows=1 loops=1)
+          Buffers: shared hit=51
+          ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.023..0.024 rows=1 loops=1)
+                Index Cond: (order_id = 1763)
+                Filter: (order_status = 'READY'::text)
+                Buffers: shared hit=5
+  ->  CTE Scan on undone u  (cost=0.00..4.33 rows=1 width=148) (actual time=0.273..0.275 rows=1 loops=1)
+        Buffers: shared hit=55
+        SubPlan 3
+          ->  Result  (cost=4.30..4.31 rows=1 width=4) (actual time=0.019..0.019 rows=1 loops=1)
+                Buffers: shared hit=4
+                InitPlan 2 (returns $3)
+                  ->  Limit  (cost=0.28..4.30 rows=1 width=4) (actual time=0.017..0.017 rows=0 loops=1)
+                        Buffers: shared hit=4
+                        ->  Index Only Scan Backward using order_changes_pkey on order_changes c  (cost=0.28..4.30 rows=1 width=4) (actual time=0.016..0.017 rows=0 loops=1)
+                              Index Cond: ((order_id = u.order_id) AND (change_no IS NOT NULL))
+                              Heap Fetches: 1
+                              Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=253
+Planning Time: 0.643 ms
+Trigger for constraint order_changes_order_id_fkey on order_changes: time=0.129 calls=1
+Trigger for constraint order_changes_changed_by_fkey on order_changes: time=0.128 calls=1
+Execution Time: 0.657 ms
+
+=== W34 run 5 ===
+Insert on order_changes  (cost=8.31..12.64 rows=1 width=148) (actual time=0.369..0.372 rows=1 loops=1)
+  Buffers: shared hit=69
+  CTE undone
+    ->  Update on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.283..0.284 rows=1 loops=1)
+          Buffers: shared hit=51
+          ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=46) (actual time=0.023..0.024 rows=1 loops=1)
+                Index Cond: (order_id = 1763)
+                Filter: (order_status = 'READY'::text)
+                Buffers: shared hit=5
+  ->  CTE Scan on undone u  (cost=0.00..4.33 rows=1 width=148) (actual time=0.312..0.314 rows=1 loops=1)
+        Buffers: shared hit=55
+        SubPlan 3
+          ->  Result  (cost=4.30..4.31 rows=1 width=4) (actual time=0.023..0.023 rows=1 loops=1)
+                Buffers: shared hit=4
+                InitPlan 2 (returns $3)
+                  ->  Limit  (cost=0.28..4.30 rows=1 width=4) (actual time=0.021..0.022 rows=0 loops=1)
+                        Buffers: shared hit=4
+                        ->  Index Only Scan Backward using order_changes_pkey on order_changes c  (cost=0.28..4.30 rows=1 width=4) (actual time=0.020..0.020 rows=0 loops=1)
+                              Index Cond: ((order_id = u.order_id) AND (change_no IS NOT NULL))
+                              Heap Fetches: 1
+                              Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=253
+Planning Time: 0.594 ms
+Trigger for constraint order_changes_order_id_fkey on order_changes: time=0.147 calls=1
+Trigger for constraint order_changes_changed_by_fkey on order_changes: time=0.142 calls=1
+Execution Time: 0.794 ms

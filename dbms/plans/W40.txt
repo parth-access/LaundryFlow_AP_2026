@@ -1,0 +1,72 @@
+-- W40: Add staff
+-- parameters: ['Timing Test', 'timing.test@example.com', 'COUNTER']
+
+=== W40 run 1 ===
+Insert on staff  (cost=0.00..0.01 rows=1 width=101) (actual time=0.185..0.186 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Conflict Arbiter Indexes: staff_email_key
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=49
+  ->  Result  (cost=0.00..0.01 rows=1 width=101) (actual time=0.027..0.027 rows=1 loops=1)
+        Buffers: shared hit=10
+Planning:
+  Buffers: shared hit=48
+Planning Time: 0.143 ms
+Execution Time: 0.204 ms
+
+=== W40 run 2 ===
+Insert on staff  (cost=0.00..0.01 rows=1 width=101) (actual time=0.188..0.189 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Conflict Arbiter Indexes: staff_email_key
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=50
+  ->  Result  (cost=0.00..0.01 rows=1 width=101) (actual time=0.025..0.025 rows=1 loops=1)
+        Buffers: shared hit=10
+Planning:
+  Buffers: shared hit=48
+Planning Time: 0.130 ms
+Execution Time: 0.207 ms
+
+=== W40 run 3 ===
+Insert on staff  (cost=0.00..0.01 rows=1 width=101) (actual time=0.175..0.175 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Conflict Arbiter Indexes: staff_email_key
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=50
+  ->  Result  (cost=0.00..0.01 rows=1 width=101) (actual time=0.024..0.024 rows=1 loops=1)
+        Buffers: shared hit=10
+Planning:
+  Buffers: shared hit=48
+Planning Time: 0.116 ms
+Execution Time: 0.192 ms
+
+=== W40 run 4 ===
+Insert on staff  (cost=0.00..0.01 rows=1 width=101) (actual time=0.214..0.214 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Conflict Arbiter Indexes: staff_email_key
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=50
+  ->  Result  (cost=0.00..0.01 rows=1 width=101) (actual time=0.031..0.031 rows=1 loops=1)
+        Buffers: shared hit=10
+Planning:
+  Buffers: shared hit=48
+Planning Time: 0.155 ms
+Execution Time: 0.236 ms
+
+=== W40 run 5 ===
+Insert on staff  (cost=0.00..0.01 rows=1 width=101) (actual time=0.174..0.175 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Conflict Arbiter Indexes: staff_email_key
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=50
+  ->  Result  (cost=0.00..0.01 rows=1 width=101) (actual time=0.024..0.024 rows=1 loops=1)
+        Buffers: shared hit=10
+Planning:
+  Buffers: shared hit=48
+Planning Time: 0.117 ms
+Execution Time: 0.193 ms

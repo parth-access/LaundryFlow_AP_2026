@@ -1,0 +1,62 @@
+-- W41: Deactivate or reactivate staff
+-- parameters: ['3', 'f', '1']
+
+=== W41 run 1 ===
+Update on staff  (cost=0.00..1.18 rows=1 width=7) (actual time=0.191..0.194 rows=1 loops=1)
+  Buffers: shared hit=36
+  ->  Seq Scan on staff  (cost=0.00..1.18 rows=1 width=7) (actual time=0.009..0.010 rows=1 loops=1)
+        Filter: ((staff_id <> 1) AND (staff_id = 3))
+        Rows Removed by Filter: 11
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=84
+Planning Time: 0.298 ms
+Execution Time: 0.252 ms
+
+=== W41 run 2 ===
+Update on staff  (cost=0.00..1.18 rows=1 width=7) (actual time=0.173..0.175 rows=1 loops=1)
+  Buffers: shared hit=36
+  ->  Seq Scan on staff  (cost=0.00..1.18 rows=1 width=7) (actual time=0.009..0.010 rows=1 loops=1)
+        Filter: ((staff_id <> 1) AND (staff_id = 3))
+        Rows Removed by Filter: 11
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=84
+Planning Time: 0.342 ms
+Execution Time: 0.231 ms
+
+=== W41 run 3 ===
+Update on staff  (cost=0.00..1.18 rows=1 width=7) (actual time=0.169..0.171 rows=1 loops=1)
+  Buffers: shared hit=36
+  ->  Seq Scan on staff  (cost=0.00..1.18 rows=1 width=7) (actual time=0.008..0.009 rows=1 loops=1)
+        Filter: ((staff_id <> 1) AND (staff_id = 3))
+        Rows Removed by Filter: 11
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=84
+Planning Time: 0.275 ms
+Execution Time: 0.227 ms
+
+=== W41 run 4 ===
+Update on staff  (cost=0.00..1.18 rows=1 width=7) (actual time=0.301..0.304 rows=1 loops=1)
+  Buffers: shared hit=36
+  ->  Seq Scan on staff  (cost=0.00..1.18 rows=1 width=7) (actual time=0.010..0.012 rows=1 loops=1)
+        Filter: ((staff_id <> 1) AND (staff_id = 3))
+        Rows Removed by Filter: 11
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=84
+Planning Time: 0.307 ms
+Execution Time: 0.380 ms
+
+=== W41 run 5 ===
+Update on staff  (cost=0.00..1.18 rows=1 width=7) (actual time=0.151..0.153 rows=1 loops=1)
+  Buffers: shared hit=36
+  ->  Seq Scan on staff  (cost=0.00..1.18 rows=1 width=7) (actual time=0.007..0.008 rows=1 loops=1)
+        Filter: ((staff_id <> 1) AND (staff_id = 3))
+        Rows Removed by Filter: 11
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=84
+Planning Time: 0.210 ms
+Execution Time: 0.200 ms

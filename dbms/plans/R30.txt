@@ -1,0 +1,142 @@
+-- R30: Unpaid fines
+-- parameters: []
+
+=== R30 run 1 ===
+Sort  (cost=1439.86..1442.24 rows=954 width=34) (actual time=7.789..7.843 rows=954 loops=1)
+  Sort Key: o.received_at
+  Sort Method: quicksort  Memory: 92kB
+  Buffers: shared hit=775
+  ->  Hash Join  (cost=131.51..1392.65 rows=954 width=34) (actual time=0.908..7.577 rows=954 loops=1)
+        Hash Cond: (o.student_id = s.student_id)
+        Buffers: shared hit=772
+        ->  Hash Join  (cost=56.51..1315.14 rows=954 width=21) (actual time=0.410..6.919 rows=954 loops=1)
+              Hash Cond: (o.order_id = f.order_id)
+              Buffers: shared hit=742
+              ->  Seq Scan on orders o  (cost=0.00..1130.62 rows=48762 width=16) (actual time=0.003..2.901 rows=48762 loops=1)
+                    Buffers: shared hit=643
+              ->  Hash  (cost=44.58..44.58 rows=954 width=9) (actual time=0.388..0.389 rows=954 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 47kB
+                    Buffers: shared hit=99
+                    ->  Index Scan using ix_fines_unpaid on fines f  (cost=0.28..44.58 rows=954 width=9) (actual time=0.010..0.300 rows=954 loops=1)
+                          Buffers: shared hit=99
+        ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.486..0.487 rows=2000 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 128kB
+              Buffers: shared hit=30
+              ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.004..0.207 rows=2000 loops=1)
+                    Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=417
+Planning Time: 0.744 ms
+Execution Time: 7.914 ms
+
+=== R30 run 2 ===
+Sort  (cost=1439.86..1442.24 rows=954 width=34) (actual time=8.079..8.126 rows=954 loops=1)
+  Sort Key: o.received_at
+  Sort Method: quicksort  Memory: 92kB
+  Buffers: shared hit=772
+  ->  Hash Join  (cost=131.51..1392.65 rows=954 width=34) (actual time=0.839..7.870 rows=954 loops=1)
+        Hash Cond: (o.student_id = s.student_id)
+        Buffers: shared hit=769
+        ->  Hash Join  (cost=56.51..1315.14 rows=954 width=21) (actual time=0.338..7.215 rows=954 loops=1)
+              Hash Cond: (o.order_id = f.order_id)
+              Buffers: shared hit=739
+              ->  Seq Scan on orders o  (cost=0.00..1130.62 rows=48762 width=16) (actual time=0.004..3.522 rows=48762 loops=1)
+                    Buffers: shared hit=643
+              ->  Hash  (cost=44.58..44.58 rows=954 width=9) (actual time=0.314..0.315 rows=954 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 47kB
+                    Buffers: shared hit=96
+                    ->  Index Scan using ix_fines_unpaid on fines f  (cost=0.28..44.58 rows=954 width=9) (actual time=0.010..0.235 rows=954 loops=1)
+                          Buffers: shared hit=96
+        ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.491..0.491 rows=2000 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 128kB
+              Buffers: shared hit=30
+              ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.004..0.179 rows=2000 loops=1)
+                    Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=417
+Planning Time: 0.695 ms
+Execution Time: 8.191 ms
+
+=== R30 run 3 ===
+Sort  (cost=1439.86..1442.24 rows=954 width=34) (actual time=7.683..7.745 rows=954 loops=1)
+  Sort Key: o.received_at
+  Sort Method: quicksort  Memory: 92kB
+  Buffers: shared hit=772
+  ->  Hash Join  (cost=131.51..1392.65 rows=954 width=34) (actual time=0.910..7.475 rows=954 loops=1)
+        Hash Cond: (o.student_id = s.student_id)
+        Buffers: shared hit=769
+        ->  Hash Join  (cost=56.51..1315.14 rows=954 width=21) (actual time=0.383..6.787 rows=954 loops=1)
+              Hash Cond: (o.order_id = f.order_id)
+              Buffers: shared hit=739
+              ->  Seq Scan on orders o  (cost=0.00..1130.62 rows=48762 width=16) (actual time=0.004..2.789 rows=48762 loops=1)
+                    Buffers: shared hit=643
+              ->  Hash  (cost=44.58..44.58 rows=954 width=9) (actual time=0.360..0.361 rows=954 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 47kB
+                    Buffers: shared hit=96
+                    ->  Index Scan using ix_fines_unpaid on fines f  (cost=0.28..44.58 rows=954 width=9) (actual time=0.011..0.253 rows=954 loops=1)
+                          Buffers: shared hit=96
+        ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.517..0.517 rows=2000 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 128kB
+              Buffers: shared hit=30
+              ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.003..0.195 rows=2000 loops=1)
+                    Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=417
+Planning Time: 0.759 ms
+Execution Time: 7.818 ms
+
+=== R30 run 4 ===
+Sort  (cost=1439.86..1442.24 rows=954 width=34) (actual time=10.100..10.174 rows=954 loops=1)
+  Sort Key: o.received_at
+  Sort Method: quicksort  Memory: 92kB
+  Buffers: shared hit=772
+  ->  Hash Join  (cost=131.51..1392.65 rows=954 width=34) (actual time=1.157..9.844 rows=954 loops=1)
+        Hash Cond: (o.student_id = s.student_id)
+        Buffers: shared hit=769
+        ->  Hash Join  (cost=56.51..1315.14 rows=954 width=21) (actual time=0.455..8.936 rows=954 loops=1)
+              Hash Cond: (o.order_id = f.order_id)
+              Buffers: shared hit=739
+              ->  Seq Scan on orders o  (cost=0.00..1130.62 rows=48762 width=16) (actual time=0.006..3.600 rows=48762 loops=1)
+                    Buffers: shared hit=643
+              ->  Hash  (cost=44.58..44.58 rows=954 width=9) (actual time=0.423..0.424 rows=954 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 47kB
+                    Buffers: shared hit=96
+                    ->  Index Scan using ix_fines_unpaid on fines f  (cost=0.28..44.58 rows=954 width=9) (actual time=0.011..0.323 rows=954 loops=1)
+                          Buffers: shared hit=96
+        ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.691..0.691 rows=2000 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 128kB
+              Buffers: shared hit=30
+              ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.004..0.249 rows=2000 loops=1)
+                    Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=417
+Planning Time: 1.064 ms
+Execution Time: 10.256 ms
+
+=== R30 run 5 ===
+Sort  (cost=1439.86..1442.24 rows=954 width=34) (actual time=8.559..8.615 rows=954 loops=1)
+  Sort Key: o.received_at
+  Sort Method: quicksort  Memory: 92kB
+  Buffers: shared hit=772
+  ->  Hash Join  (cost=131.51..1392.65 rows=954 width=34) (actual time=1.057..8.317 rows=954 loops=1)
+        Hash Cond: (o.student_id = s.student_id)
+        Buffers: shared hit=769
+        ->  Hash Join  (cost=56.51..1315.14 rows=954 width=21) (actual time=0.483..7.567 rows=954 loops=1)
+              Hash Cond: (o.order_id = f.order_id)
+              Buffers: shared hit=739
+              ->  Seq Scan on orders o  (cost=0.00..1130.62 rows=48762 width=16) (actual time=0.004..3.088 rows=48762 loops=1)
+                    Buffers: shared hit=643
+              ->  Hash  (cost=44.58..44.58 rows=954 width=9) (actual time=0.456..0.457 rows=954 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 47kB
+                    Buffers: shared hit=96
+                    ->  Index Scan using ix_fines_unpaid on fines f  (cost=0.28..44.58 rows=954 width=9) (actual time=0.012..0.355 rows=954 loops=1)
+                          Buffers: shared hit=96
+        ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.562..0.562 rows=2000 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 128kB
+              Buffers: shared hit=30
+              ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.005..0.212 rows=2000 loops=1)
+                    Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=417
+Planning Time: 0.852 ms
+Execution Time: 8.698 ms

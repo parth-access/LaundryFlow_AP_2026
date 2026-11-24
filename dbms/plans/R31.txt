@@ -1,0 +1,112 @@
+-- R31: Orders ready to wash
+-- parameters: []
+
+=== R31 run 1 ===
+Sort  (cost=103.16..103.51 rows=137 width=33) (actual time=1.204..1.211 rows=130 loops=1)
+  Sort Key: o.received_at
+  Sort Method: quicksort  Memory: 33kB
+  Buffers: shared hit=324
+  ->  Hash Join  (cost=75.15..98.30 rows=137 width=33) (actual time=0.676..1.157 rows=130 loops=1)
+        Hash Cond: (o.student_id = s.student_id)
+        Buffers: shared hit=321
+        ->  Index Scan using uq_orders_one_open_per_student on orders o  (cost=0.15..22.94 rows=137 width=20) (actual time=0.009..0.465 rows=130 loops=1)
+              Filter: (order_status = 'RECEIVED'::text)
+              Rows Removed by Filter: 207
+              Buffers: shared hit=291
+        ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.654..0.654 rows=2000 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 128kB
+              Buffers: shared hit=30
+              ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.003..0.230 rows=2000 loops=1)
+                    Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=421
+Planning Time: 0.801 ms
+Execution Time: 1.241 ms
+
+=== R31 run 2 ===
+Sort  (cost=103.16..103.51 rows=137 width=33) (actual time=1.052..1.059 rows=130 loops=1)
+  Sort Key: o.received_at
+  Sort Method: quicksort  Memory: 33kB
+  Buffers: shared hit=324
+  ->  Hash Join  (cost=75.15..98.30 rows=137 width=33) (actual time=0.539..1.007 rows=130 loops=1)
+        Hash Cond: (o.student_id = s.student_id)
+        Buffers: shared hit=321
+        ->  Index Scan using uq_orders_one_open_per_student on orders o  (cost=0.15..22.94 rows=137 width=20) (actual time=0.008..0.448 rows=130 loops=1)
+              Filter: (order_status = 'RECEIVED'::text)
+              Rows Removed by Filter: 207
+              Buffers: shared hit=291
+        ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.518..0.519 rows=2000 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 128kB
+              Buffers: shared hit=30
+              ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.003..0.205 rows=2000 loops=1)
+                    Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=421
+Planning Time: 0.759 ms
+Execution Time: 1.086 ms
+
+=== R31 run 3 ===
+Sort  (cost=103.16..103.51 rows=137 width=33) (actual time=1.042..1.075 rows=130 loops=1)
+  Sort Key: o.received_at
+  Sort Method: quicksort  Memory: 33kB
+  Buffers: shared hit=324
+  ->  Hash Join  (cost=75.15..98.30 rows=137 width=33) (actual time=0.559..1.023 rows=130 loops=1)
+        Hash Cond: (o.student_id = s.student_id)
+        Buffers: shared hit=321
+        ->  Index Scan using uq_orders_one_open_per_student on orders o  (cost=0.15..22.94 rows=137 width=20) (actual time=0.008..0.416 rows=130 loops=1)
+              Filter: (order_status = 'RECEIVED'::text)
+              Rows Removed by Filter: 207
+              Buffers: shared hit=291
+        ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.540..0.567 rows=2000 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 128kB
+              Buffers: shared hit=30
+              ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.004..0.198 rows=2000 loops=1)
+                    Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=421
+Planning Time: 0.766 ms
+Execution Time: 1.100 ms
+
+=== R31 run 4 ===
+Sort  (cost=103.16..103.51 rows=137 width=33) (actual time=1.070..1.077 rows=130 loops=1)
+  Sort Key: o.received_at
+  Sort Method: quicksort  Memory: 33kB
+  Buffers: shared hit=324
+  ->  Hash Join  (cost=75.15..98.30 rows=137 width=33) (actual time=0.572..1.028 rows=130 loops=1)
+        Hash Cond: (o.student_id = s.student_id)
+        Buffers: shared hit=321
+        ->  Index Scan using uq_orders_one_open_per_student on orders o  (cost=0.15..22.94 rows=137 width=20) (actual time=0.008..0.439 rows=130 loops=1)
+              Filter: (order_status = 'RECEIVED'::text)
+              Rows Removed by Filter: 207
+              Buffers: shared hit=291
+        ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.553..0.553 rows=2000 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 128kB
+              Buffers: shared hit=30
+              ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.003..0.233 rows=2000 loops=1)
+                    Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=421
+Planning Time: 0.755 ms
+Execution Time: 1.106 ms
+
+=== R31 run 5 ===
+Sort  (cost=103.16..103.51 rows=137 width=33) (actual time=1.082..1.089 rows=130 loops=1)
+  Sort Key: o.received_at
+  Sort Method: quicksort  Memory: 33kB
+  Buffers: shared hit=324
+  ->  Hash Join  (cost=75.15..98.30 rows=137 width=33) (actual time=0.592..1.030 rows=130 loops=1)
+        Hash Cond: (o.student_id = s.student_id)
+        Buffers: shared hit=321
+        ->  Index Scan using uq_orders_one_open_per_student on orders o  (cost=0.15..22.94 rows=137 width=20) (actual time=0.008..0.420 rows=130 loops=1)
+              Filter: (order_status = 'RECEIVED'::text)
+              Rows Removed by Filter: 207
+              Buffers: shared hit=291
+        ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.572..0.572 rows=2000 loops=1)
+              Buckets: 2048  Batches: 1  Memory Usage: 128kB
+              Buffers: shared hit=30
+              ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.004..0.199 rows=2000 loops=1)
+                    Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=421
+Planning Time: 0.739 ms
+Execution Time: 1.114 ms

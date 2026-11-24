@@ -1,0 +1,37 @@
+query_id,type,avg_ms,median_ms,min_ms,max_ms,scan_nodes
+R01,READ,0.088,0.084,0.066,0.113,Index Scan using ix_students_bag_number on students | Index Scan using uq_orders_one_open_per_student on orders
+R02,READ,1.189,1.107,1.047,1.526,Index Scan using uq_orders_one_open_per_student on orders | Seq Scan on students
+R03,READ,0.072,0.068,0.064,0.091,Index Scan using ix_orders_student on orders | Index Scan using fines_pkey on fines
+R04,READ,0.061,0.060,0.049,0.071,Index Scan using students_email_key on students
+R05,READ,0.039,0.037,0.036,0.046,Seq Scan on staff
+W01,WRITE,1.025,0.993,0.912,1.151,
+W02,WRITE,0.460,0.483,0.368,0.520,
+R10,READ,0.025,0.020,0.017,0.041,Index Scan using uq_orders_one_open_per_student on orders
+R11,READ,0.064,0.065,0.061,0.068,Index Scan using orders_pkey on orders | Index Scan using fines_pkey on fines | Seq Scan on policies
+R12,READ,0.112,0.103,0.095,0.151,Seq Scan on policies | Index Scan using ix_orders_student on orders | Index Scan using fines_pkey on fines
+R13,READ,0.108,0.106,0.102,0.115,Index Scan using ix_orders_student on orders | Index Scan using fines_pkey on fines
+W10,WRITE,0.702,0.741,0.600,0.811,Index Only Scan using uq_orders_one_open_per_student on orders
+W11,WRITE,0.313,0.272,0.271,0.477,Index Scan using uq_orders_one_open_per_student on orders
+W12,WRITE,0.312,0.326,0.272,0.343,Index Scan using uq_orders_one_open_per_student on orders
+R20,READ,0.057,0.047,0.041,0.084,Seq Scan on policies
+W20,WRITE,0.765,0.781,0.665,0.882,Index Scan using orders_pkey on orders
+W21,WRITE,0.871,0.869,0.849,0.900,
+W22,WRITE,0.672,0.696,0.597,0.737,Index Scan using students_pkey on students
+R23,READ,0.055,0.052,0.042,0.075,Index Scan using orders_pkey on orders | Index Scan using students_pkey on students
+R30,READ,8.575,8.191,7.818,10.256,Seq Scan on orders | Index Scan using ix_fines_unpaid on fines | Seq Scan on students
+R31,READ,1.129,1.106,1.086,1.241,Index Scan using uq_orders_one_open_per_student on orders | Seq Scan on students
+R32,READ,1.209,1.204,1.075,1.345,Index Scan using uq_orders_one_open_per_student on orders | Seq Scan on students
+R33,READ,20.689,19.895,18.369,25.606,Seq Scan on orders | Seq Scan on fines | Seq Scan on students | Seq Scan on staff
+R34,READ,0.145,0.147,0.132,0.162,Index Scan using ix_students_bag_number on students | Index Scan using uq_orders_one_open_per_student on orders
+W30,WRITE,0.308,0.309,0.284,0.335,Index Scan using orders_pkey on orders
+W31,WRITE,0.551,0.547,0.491,0.601,Index Scan using orders_pkey on orders
+W32,WRITE,0.236,0.248,0.198,0.260,Index Scan using ix_fines_unpaid on fines
+W33,WRITE,0.481,0.481,0.442,0.521,Index Scan using ix_fines_unpaid on fines
+W35,WRITE,1.025,0.980,0.944,1.127,Index Scan using uq_orders_one_open_per_student on orders
+W34,WRITE,0.732,0.744,0.657,0.794,Index Scan using orders_pkey on orders | Index Only Scan
+R40,READ,0.050,0.050,0.045,0.056,Seq Scan on staff
+R41,READ,0.059,0.058,0.053,0.064,Seq Scan on policies
+R42,READ,19.018,19.075,17.714,20.441,Seq Scan on orders | Index Only Scan using ix_orders_open on orders | Index Only Scan using ix_fines_unpaid on fines | Index Scan using ix_fines_unpaid on fines
+W40,WRITE,0.206,0.204,0.192,0.236,
+W41,WRITE,0.258,0.231,0.200,0.380,Seq Scan on staff
+W42,WRITE,0.237,0.233,0.222,0.267,

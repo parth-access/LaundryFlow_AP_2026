@@ -1,0 +1,102 @@
+-- R11: One of a student's orders, with its fine
+-- parameters: ['21', '1']
+
+=== R11 run 1 ===
+Nested Loop Left Join  (cost=0.57..17.65 rows=1 width=103) (actual time=0.022..0.023 rows=1 loops=1)
+  Join Filter: (p.policy_id = o.policy_id)
+  Buffers: shared hit=7
+  ->  Nested Loop Left Join  (cost=0.57..16.62 rows=1 width=98) (actual time=0.018..0.019 rows=1 loops=1)
+        Buffers: shared hit=6
+        ->  Index Scan using orders_pkey on orders o  (cost=0.29..8.31 rows=1 width=57) (actual time=0.008..0.009 rows=1 loops=1)
+              Index Cond: (order_id = 21)
+              Filter: (student_id = 1)
+              Buffers: shared hit=3
+        ->  Index Scan using fines_pkey on fines f  (cost=0.29..8.30 rows=1 width=45) (actual time=0.008..0.008 rows=1 loops=1)
+              Index Cond: (order_id = 21)
+              Buffers: shared hit=3
+  ->  Seq Scan on policies p  (cost=0.00..1.01 rows=1 width=13) (actual time=0.002..0.002 rows=1 loops=1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=351
+Planning Time: 0.630 ms
+Execution Time: 0.061 ms
+
+=== R11 run 2 ===
+Nested Loop Left Join  (cost=0.57..17.65 rows=1 width=103) (actual time=0.023..0.024 rows=1 loops=1)
+  Join Filter: (p.policy_id = o.policy_id)
+  Buffers: shared hit=7
+  ->  Nested Loop Left Join  (cost=0.57..16.62 rows=1 width=98) (actual time=0.020..0.020 rows=1 loops=1)
+        Buffers: shared hit=6
+        ->  Index Scan using orders_pkey on orders o  (cost=0.29..8.31 rows=1 width=57) (actual time=0.008..0.008 rows=1 loops=1)
+              Index Cond: (order_id = 21)
+              Filter: (student_id = 1)
+              Buffers: shared hit=3
+        ->  Index Scan using fines_pkey on fines f  (cost=0.29..8.30 rows=1 width=45) (actual time=0.010..0.010 rows=1 loops=1)
+              Index Cond: (order_id = 21)
+              Buffers: shared hit=3
+  ->  Seq Scan on policies p  (cost=0.00..1.01 rows=1 width=13) (actual time=0.002..0.002 rows=1 loops=1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=351
+Planning Time: 0.668 ms
+Execution Time: 0.063 ms
+
+=== R11 run 3 ===
+Nested Loop Left Join  (cost=0.57..17.65 rows=1 width=103) (actual time=0.022..0.023 rows=1 loops=1)
+  Join Filter: (p.policy_id = o.policy_id)
+  Buffers: shared hit=7
+  ->  Nested Loop Left Join  (cost=0.57..16.62 rows=1 width=98) (actual time=0.019..0.020 rows=1 loops=1)
+        Buffers: shared hit=6
+        ->  Index Scan using orders_pkey on orders o  (cost=0.29..8.31 rows=1 width=57) (actual time=0.008..0.008 rows=1 loops=1)
+              Index Cond: (order_id = 21)
+              Filter: (student_id = 1)
+              Buffers: shared hit=3
+        ->  Index Scan using fines_pkey on fines f  (cost=0.29..8.30 rows=1 width=45) (actual time=0.009..0.010 rows=1 loops=1)
+              Index Cond: (order_id = 21)
+              Buffers: shared hit=3
+  ->  Seq Scan on policies p  (cost=0.00..1.01 rows=1 width=13) (actual time=0.002..0.002 rows=1 loops=1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=351
+Planning Time: 0.627 ms
+Execution Time: 0.068 ms
+
+=== R11 run 4 ===
+Nested Loop Left Join  (cost=0.57..17.65 rows=1 width=103) (actual time=0.023..0.025 rows=1 loops=1)
+  Join Filter: (p.policy_id = o.policy_id)
+  Buffers: shared hit=7
+  ->  Nested Loop Left Join  (cost=0.57..16.62 rows=1 width=98) (actual time=0.020..0.021 rows=1 loops=1)
+        Buffers: shared hit=6
+        ->  Index Scan using orders_pkey on orders o  (cost=0.29..8.31 rows=1 width=57) (actual time=0.009..0.009 rows=1 loops=1)
+              Index Cond: (order_id = 21)
+              Filter: (student_id = 1)
+              Buffers: shared hit=3
+        ->  Index Scan using fines_pkey on fines f  (cost=0.29..8.30 rows=1 width=45) (actual time=0.009..0.009 rows=1 loops=1)
+              Index Cond: (order_id = 21)
+              Buffers: shared hit=3
+  ->  Seq Scan on policies p  (cost=0.00..1.01 rows=1 width=13) (actual time=0.002..0.002 rows=1 loops=1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=351
+Planning Time: 0.649 ms
+Execution Time: 0.065 ms
+
+=== R11 run 5 ===
+Nested Loop Left Join  (cost=0.57..17.65 rows=1 width=103) (actual time=0.023..0.024 rows=1 loops=1)
+  Join Filter: (p.policy_id = o.policy_id)
+  Buffers: shared hit=7
+  ->  Nested Loop Left Join  (cost=0.57..16.62 rows=1 width=98) (actual time=0.019..0.020 rows=1 loops=1)
+        Buffers: shared hit=6
+        ->  Index Scan using orders_pkey on orders o  (cost=0.29..8.31 rows=1 width=57) (actual time=0.008..0.008 rows=1 loops=1)
+              Index Cond: (order_id = 21)
+              Filter: (student_id = 1)
+              Buffers: shared hit=3
+        ->  Index Scan using fines_pkey on fines f  (cost=0.29..8.30 rows=1 width=45) (actual time=0.009..0.009 rows=1 loops=1)
+              Index Cond: (order_id = 21)
+              Buffers: shared hit=3
+  ->  Seq Scan on policies p  (cost=0.00..1.01 rows=1 width=13) (actual time=0.003..0.003 rows=1 loops=1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=351
+Planning Time: 0.712 ms
+Execution Time: 0.065 ms

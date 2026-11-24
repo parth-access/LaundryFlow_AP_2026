@@ -1,0 +1,62 @@
+-- W01: Submit an order
+-- parameters: ['1', '9']
+
+=== W01 run 1 ===
+Insert on orders  (cost=0.00..0.01 rows=1 width=92) (actual time=0.370..0.371 rows=1 loops=1)
+  Buffers: shared hit=136
+  ->  Result  (cost=0.00..0.01 rows=1 width=92) (actual time=0.047..0.047 rows=1 loops=1)
+        Buffers: shared hit=10
+Planning Time: 0.044 ms
+Trigger for constraint orders_student_id_fkey: time=0.534 calls=1
+Trigger for constraint orders_policy_id_fkey: time=0.020 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.027 calls=1
+Trigger for constraint orders_collected_by_fkey: time=0.003 calls=1
+Execution Time: 0.993 ms
+
+=== W01 run 2 ===
+Insert on orders  (cost=0.00..0.01 rows=1 width=92) (actual time=0.411..0.412 rows=1 loops=1)
+  Buffers: shared hit=137
+  ->  Result  (cost=0.00..0.01 rows=1 width=92) (actual time=0.040..0.041 rows=1 loops=1)
+        Buffers: shared hit=10
+Planning Time: 0.046 ms
+Trigger for constraint orders_student_id_fkey: time=0.610 calls=1
+Trigger for constraint orders_policy_id_fkey: time=0.026 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.032 calls=1
+Trigger for constraint orders_collected_by_fkey: time=0.004 calls=1
+Execution Time: 1.123 ms
+
+=== W01 run 3 ===
+Insert on orders  (cost=0.00..0.01 rows=1 width=92) (actual time=0.375..0.376 rows=1 loops=1)
+  Buffers: shared hit=137
+  ->  Result  (cost=0.00..0.01 rows=1 width=92) (actual time=0.034..0.034 rows=1 loops=1)
+        Buffers: shared hit=10
+Planning Time: 0.042 ms
+Trigger for constraint orders_student_id_fkey: time=0.458 calls=1
+Trigger for constraint orders_policy_id_fkey: time=0.019 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.023 calls=1
+Trigger for constraint orders_collected_by_fkey: time=0.002 calls=1
+Execution Time: 0.912 ms
+
+=== W01 run 4 ===
+Insert on orders  (cost=0.00..0.01 rows=1 width=92) (actual time=0.339..0.340 rows=1 loops=1)
+  Buffers: shared hit=137
+  ->  Result  (cost=0.00..0.01 rows=1 width=92) (actual time=0.036..0.037 rows=1 loops=1)
+        Buffers: shared hit=10
+Planning Time: 0.038 ms
+Trigger for constraint orders_student_id_fkey: time=0.528 calls=1
+Trigger for constraint orders_policy_id_fkey: time=0.018 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.024 calls=1
+Trigger for constraint orders_collected_by_fkey: time=0.003 calls=1
+Execution Time: 0.948 ms
+
+=== W01 run 5 ===
+Insert on orders  (cost=0.00..0.01 rows=1 width=92) (actual time=0.458..0.459 rows=1 loops=1)
+  Buffers: shared hit=137
+  ->  Result  (cost=0.00..0.01 rows=1 width=92) (actual time=0.043..0.044 rows=1 loops=1)
+        Buffers: shared hit=10
+Planning Time: 0.051 ms
+Trigger for constraint orders_student_id_fkey: time=0.579 calls=1
+Trigger for constraint orders_policy_id_fkey: time=0.026 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.037 calls=1
+Trigger for constraint orders_collected_by_fkey: time=0.004 calls=1
+Execution Time: 1.151 ms

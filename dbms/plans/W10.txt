@@ -1,0 +1,117 @@
+-- W10: Submit order if no active order exists
+-- parameters: ['1', '9']
+
+=== W10 run 1 ===
+Insert on orders  (cost=4.17..4.18 rows=1 width=92) (actual time=0.297..0.298 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=47
+  InitPlan 1 (returns $0)
+    ->  Index Only Scan using uq_orders_one_open_per_student on orders orders_1  (cost=0.15..4.17 rows=1 width=0) (actual time=0.018..0.018 rows=0 loops=1)
+          Index Cond: (student_id = 1)
+          Heap Fetches: 0
+          Buffers: shared hit=1
+  ->  Result  (cost=0.00..0.01 rows=1 width=92) (actual time=0.066..0.066 rows=1 loops=1)
+        One-Time Filter: (NOT $0)
+        Buffers: shared hit=11
+Planning:
+  Buffers: shared hit=191
+Planning Time: 0.619 ms
+Trigger for constraint orders_student_id_fkey: time=0.369 calls=1
+Trigger for constraint orders_policy_id_fkey: time=0.016 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.024 calls=1
+Trigger for constraint orders_collected_by_fkey: time=0.002 calls=1
+Execution Time: 0.748 ms
+
+=== W10 run 2 ===
+Insert on orders  (cost=4.17..4.18 rows=1 width=92) (actual time=0.321..0.323 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=49
+  InitPlan 1 (returns $0)
+    ->  Index Only Scan using uq_orders_one_open_per_student on orders orders_1  (cost=0.15..4.17 rows=1 width=0) (actual time=0.030..0.030 rows=0 loops=1)
+          Index Cond: (student_id = 1)
+          Heap Fetches: 1
+          Buffers: shared hit=3
+  ->  Result  (cost=0.00..0.01 rows=1 width=92) (actual time=0.111..0.111 rows=1 loops=1)
+        One-Time Filter: (NOT $0)
+        Buffers: shared hit=13
+Planning:
+  Buffers: shared hit=191
+Planning Time: 0.444 ms
+Trigger for constraint orders_student_id_fkey: time=0.341 calls=1
+Trigger for constraint orders_policy_id_fkey: time=0.016 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.024 calls=1
+Trigger for constraint orders_collected_by_fkey: time=0.002 calls=1
+Execution Time: 0.741 ms
+
+=== W10 run 3 ===
+Insert on orders  (cost=4.17..4.18 rows=1 width=92) (actual time=0.205..0.206 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=49
+  InitPlan 1 (returns $0)
+    ->  Index Only Scan using uq_orders_one_open_per_student on orders orders_1  (cost=0.15..4.17 rows=1 width=0) (actual time=0.021..0.022 rows=0 loops=1)
+          Index Cond: (student_id = 1)
+          Heap Fetches: 1
+          Buffers: shared hit=3
+  ->  Result  (cost=0.00..0.01 rows=1 width=92) (actual time=0.050..0.050 rows=1 loops=1)
+        One-Time Filter: (NOT $0)
+        Buffers: shared hit=13
+Planning:
+  Buffers: shared hit=191
+Planning Time: 0.466 ms
+Trigger for constraint orders_student_id_fkey: time=0.321 calls=1
+Trigger for constraint orders_policy_id_fkey: time=0.015 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.028 calls=1
+Trigger for constraint orders_collected_by_fkey: time=0.002 calls=1
+Execution Time: 0.600 ms
+
+=== W10 run 4 ===
+Insert on orders  (cost=4.17..4.18 rows=1 width=92) (actual time=0.197..0.197 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=49
+  InitPlan 1 (returns $0)
+    ->  Index Only Scan using uq_orders_one_open_per_student on orders orders_1  (cost=0.15..4.17 rows=1 width=0) (actual time=0.022..0.023 rows=0 loops=1)
+          Index Cond: (student_id = 1)
+          Heap Fetches: 1
+          Buffers: shared hit=3
+  ->  Result  (cost=0.00..0.01 rows=1 width=92) (actual time=0.050..0.050 rows=1 loops=1)
+        One-Time Filter: (NOT $0)
+        Buffers: shared hit=13
+Planning:
+  Buffers: shared hit=191
+Planning Time: 0.445 ms
+Trigger for constraint orders_student_id_fkey: time=0.342 calls=1
+Trigger for constraint orders_policy_id_fkey: time=0.018 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.025 calls=1
+Trigger for constraint orders_collected_by_fkey: time=0.002 calls=1
+Execution Time: 0.611 ms
+
+=== W10 run 5 ===
+Insert on orders  (cost=4.17..4.18 rows=1 width=92) (actual time=0.256..0.257 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=49
+  InitPlan 1 (returns $0)
+    ->  Index Only Scan using uq_orders_one_open_per_student on orders orders_1  (cost=0.15..4.17 rows=1 width=0) (actual time=0.032..0.032 rows=0 loops=1)
+          Index Cond: (student_id = 1)
+          Heap Fetches: 1
+          Buffers: shared hit=3
+  ->  Result  (cost=0.00..0.01 rows=1 width=92) (actual time=0.068..0.068 rows=1 loops=1)
+        One-Time Filter: (NOT $0)
+        Buffers: shared hit=13
+Planning:
+  Buffers: shared hit=191
+Planning Time: 0.550 ms
+Trigger for constraint orders_student_id_fkey: time=0.456 calls=1
+Trigger for constraint orders_policy_id_fkey: time=0.024 calls=1
+Trigger for constraint orders_received_by_fkey: time=0.033 calls=1
+Trigger for constraint orders_collected_by_fkey: time=0.004 calls=1
+Execution Time: 0.811 ms

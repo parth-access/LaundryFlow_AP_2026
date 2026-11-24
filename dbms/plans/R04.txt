@@ -1,0 +1,47 @@
+-- R04: Find a student by email
+-- parameters: ['meera.1@psy.rishihood.edu.in']
+
+=== R04 run 1 ===
+Index Scan using students_email_key on students  (cost=0.28..8.29 rows=1 width=72) (actual time=0.019..0.019 rows=1 loops=1)
+  Index Cond: (email = 'meera.1@psy.rishihood.edu.in'::text)
+  Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=151
+Planning Time: 0.499 ms
+Execution Time: 0.060 ms
+
+=== R04 run 2 ===
+Index Scan using students_email_key on students  (cost=0.28..8.29 rows=1 width=72) (actual time=0.020..0.021 rows=1 loops=1)
+  Index Cond: (email = 'meera.1@psy.rishihood.edu.in'::text)
+  Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=151
+Planning Time: 0.387 ms
+Execution Time: 0.070 ms
+
+=== R04 run 3 ===
+Index Scan using students_email_key on students  (cost=0.28..8.29 rows=1 width=72) (actual time=0.016..0.017 rows=1 loops=1)
+  Index Cond: (email = 'meera.1@psy.rishihood.edu.in'::text)
+  Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=151
+Planning Time: 0.309 ms
+Execution Time: 0.053 ms
+
+=== R04 run 4 ===
+Index Scan using students_email_key on students  (cost=0.28..8.29 rows=1 width=72) (actual time=0.013..0.014 rows=1 loops=1)
+  Index Cond: (email = 'meera.1@psy.rishihood.edu.in'::text)
+  Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=151
+Planning Time: 0.283 ms
+Execution Time: 0.049 ms
+
+=== R04 run 5 ===
+Index Scan using students_email_key on students  (cost=0.28..8.29 rows=1 width=72) (actual time=0.020..0.020 rows=1 loops=1)
+  Index Cond: (email = 'meera.1@psy.rishihood.edu.in'::text)
+  Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=151
+Planning Time: 0.400 ms
+Execution Time: 0.071 ms

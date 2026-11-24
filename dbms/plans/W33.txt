@@ -1,0 +1,67 @@
+-- W33: Waive unpaid fine
+-- parameters: ['60', '1', 'Timing test']
+
+=== W33 run 1 ===
+Update on fines  (cost=0.28..8.29 rows=1 width=74) (actual time=0.207..0.209 rows=1 loops=1)
+  Buffers: shared hit=43
+  ->  Index Scan using ix_fines_unpaid on fines  (cost=0.28..8.29 rows=1 width=74) (actual time=0.012..0.013 rows=1 loops=1)
+        Index Cond: (order_id = 60)
+        Filter: (fine_status = 'UNPAID'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=91
+Planning Time: 0.285 ms
+Trigger for constraint fines_waived_by_fkey: time=0.213 calls=1
+Execution Time: 0.481 ms
+
+=== W33 run 2 ===
+Update on fines  (cost=0.28..8.29 rows=1 width=74) (actual time=0.189..0.190 rows=1 loops=1)
+  Buffers: shared hit=43
+  ->  Index Scan using ix_fines_unpaid on fines  (cost=0.28..8.29 rows=1 width=74) (actual time=0.017..0.017 rows=1 loops=1)
+        Index Cond: (order_id = 60)
+        Filter: (fine_status = 'UNPAID'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=91
+Planning Time: 0.268 ms
+Trigger for constraint fines_waived_by_fkey: time=0.274 calls=1
+Execution Time: 0.521 ms
+
+=== W33 run 3 ===
+Update on fines  (cost=0.28..8.29 rows=1 width=74) (actual time=0.195..0.196 rows=1 loops=1)
+  Buffers: shared hit=43
+  ->  Index Scan using ix_fines_unpaid on fines  (cost=0.28..8.29 rows=1 width=74) (actual time=0.016..0.017 rows=1 loops=1)
+        Index Cond: (order_id = 60)
+        Filter: (fine_status = 'UNPAID'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=91
+Planning Time: 0.277 ms
+Trigger for constraint fines_waived_by_fkey: time=0.255 calls=1
+Execution Time: 0.502 ms
+
+=== W33 run 4 ===
+Update on fines  (cost=0.28..8.29 rows=1 width=74) (actual time=0.198..0.199 rows=1 loops=1)
+  Buffers: shared hit=43
+  ->  Index Scan using ix_fines_unpaid on fines  (cost=0.28..8.29 rows=1 width=74) (actual time=0.017..0.018 rows=1 loops=1)
+        Index Cond: (order_id = 60)
+        Filter: (fine_status = 'UNPAID'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=91
+Planning Time: 0.274 ms
+Trigger for constraint fines_waived_by_fkey: time=0.210 calls=1
+Execution Time: 0.461 ms
+
+=== W33 run 5 ===
+Update on fines  (cost=0.28..8.29 rows=1 width=74) (actual time=0.187..0.188 rows=1 loops=1)
+  Buffers: shared hit=43
+  ->  Index Scan using ix_fines_unpaid on fines  (cost=0.28..8.29 rows=1 width=74) (actual time=0.017..0.018 rows=1 loops=1)
+        Index Cond: (order_id = 60)
+        Filter: (fine_status = 'UNPAID'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=91
+Planning Time: 0.274 ms
+Trigger for constraint fines_waived_by_fkey: time=0.201 calls=1
+Execution Time: 0.442 ms

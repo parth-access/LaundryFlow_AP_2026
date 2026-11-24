@@ -1,0 +1,77 @@
+-- W42: New fine policy
+-- parameters: ['2026-12-24', '10', '5']
+
+=== W42 run 1 ===
+Insert on policies  (cost=0.01..0.02 rows=1 width=26) (actual time=0.218..0.219 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Conflict Arbiter Indexes: policies_effective_from_key
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=36
+  ->  Result  (cost=0.01..0.02 rows=1 width=26) (actual time=0.121..0.121 rows=1 loops=1)
+        One-Time Filter: ('2026-12-24'::date >= ((now() AT TIME ZONE 'Asia/Kolkata'::text))::date)
+        Buffers: shared hit=10
+Planning:
+  Buffers: shared hit=41
+Planning Time: 0.112 ms
+Execution Time: 0.233 ms
+
+=== W42 run 2 ===
+Insert on policies  (cost=0.01..0.02 rows=1 width=26) (actual time=0.252..0.253 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Conflict Arbiter Indexes: policies_effective_from_key
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=37
+  ->  Result  (cost=0.01..0.02 rows=1 width=26) (actual time=0.149..0.149 rows=1 loops=1)
+        One-Time Filter: ('2026-12-24'::date >= ((now() AT TIME ZONE 'Asia/Kolkata'::text))::date)
+        Buffers: shared hit=10
+Planning:
+  Buffers: shared hit=41
+Planning Time: 0.115 ms
+Execution Time: 0.267 ms
+
+=== W42 run 3 ===
+Insert on policies  (cost=0.01..0.02 rows=1 width=26) (actual time=0.208..0.209 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Conflict Arbiter Indexes: policies_effective_from_key
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=37
+  ->  Result  (cost=0.01..0.02 rows=1 width=26) (actual time=0.116..0.116 rows=1 loops=1)
+        One-Time Filter: ('2026-12-24'::date >= ((now() AT TIME ZONE 'Asia/Kolkata'::text))::date)
+        Buffers: shared hit=10
+Planning:
+  Buffers: shared hit=41
+Planning Time: 0.138 ms
+Execution Time: 0.222 ms
+
+=== W42 run 4 ===
+Insert on policies  (cost=0.01..0.02 rows=1 width=26) (actual time=0.212..0.212 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Conflict Arbiter Indexes: policies_effective_from_key
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=37
+  ->  Result  (cost=0.01..0.02 rows=1 width=26) (actual time=0.111..0.112 rows=1 loops=1)
+        One-Time Filter: ('2026-12-24'::date >= ((now() AT TIME ZONE 'Asia/Kolkata'::text))::date)
+        Buffers: shared hit=10
+Planning:
+  Buffers: shared hit=41
+Planning Time: 0.137 ms
+Execution Time: 0.225 ms
+
+=== W42 run 5 ===
+Insert on policies  (cost=0.01..0.02 rows=1 width=26) (actual time=0.226..0.227 rows=1 loops=1)
+  Conflict Resolution: NOTHING
+  Conflict Arbiter Indexes: policies_effective_from_key
+  Tuples Inserted: 1
+  Conflicting Tuples: 0
+  Buffers: shared hit=37
+  ->  Result  (cost=0.01..0.02 rows=1 width=26) (actual time=0.138..0.138 rows=1 loops=1)
+        One-Time Filter: ('2026-12-24'::date >= ((now() AT TIME ZONE 'Asia/Kolkata'::text))::date)
+        Buffers: shared hit=10
+Planning:
+  Buffers: shared hit=41
+Planning Time: 0.112 ms
+Execution Time: 0.239 ms

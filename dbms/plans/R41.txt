@@ -1,0 +1,62 @@
+-- R41: Fine policy history
+-- parameters: []
+
+=== R41 run 1 ===
+Sort  (cost=1.02..1.03 rows=1 width=45) (actual time=0.032..0.032 rows=1 loops=1)
+  Sort Key: ((effective_from)::text) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=4
+  ->  Seq Scan on policies  (cost=0.00..1.01 rows=1 width=45) (actual time=0.008..0.008 rows=1 loops=1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=115
+Planning Time: 0.232 ms
+Execution Time: 0.064 ms
+
+=== R41 run 2 ===
+Sort  (cost=1.02..1.03 rows=1 width=45) (actual time=0.029..0.030 rows=1 loops=1)
+  Sort Key: ((effective_from)::text) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=4
+  ->  Seq Scan on policies  (cost=0.00..1.01 rows=1 width=45) (actual time=0.007..0.007 rows=1 loops=1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=115
+Planning Time: 0.244 ms
+Execution Time: 0.060 ms
+
+=== R41 run 3 ===
+Sort  (cost=1.02..1.03 rows=1 width=45) (actual time=0.026..0.026 rows=1 loops=1)
+  Sort Key: ((effective_from)::text) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=4
+  ->  Seq Scan on policies  (cost=0.00..1.01 rows=1 width=45) (actual time=0.006..0.006 rows=1 loops=1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=115
+Planning Time: 0.238 ms
+Execution Time: 0.053 ms
+
+=== R41 run 4 ===
+Sort  (cost=1.02..1.03 rows=1 width=45) (actual time=0.027..0.028 rows=1 loops=1)
+  Sort Key: ((effective_from)::text) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=4
+  ->  Seq Scan on policies  (cost=0.00..1.01 rows=1 width=45) (actual time=0.008..0.009 rows=1 loops=1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=115
+Planning Time: 0.229 ms
+Execution Time: 0.058 ms
+
+=== R41 run 5 ===
+Sort  (cost=1.02..1.03 rows=1 width=45) (actual time=0.026..0.027 rows=1 loops=1)
+  Sort Key: ((effective_from)::text) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=4
+  ->  Seq Scan on policies  (cost=0.00..1.01 rows=1 width=45) (actual time=0.006..0.006 rows=1 loops=1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=115
+Planning Time: 0.227 ms
+Execution Time: 0.058 ms

@@ -1,0 +1,62 @@
+-- W32: Mark fine paid
+-- parameters: ['60']
+
+=== W32 run 1 ===
+Update on fines  (cost=0.28..8.30 rows=1 width=46) (actual time=0.194..0.196 rows=1 loops=1)
+  Buffers: shared hit=43
+  ->  Index Scan using ix_fines_unpaid on fines  (cost=0.28..8.30 rows=1 width=46) (actual time=0.013..0.013 rows=1 loops=1)
+        Index Cond: (order_id = 60)
+        Filter: (fine_status = 'UNPAID'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=88
+Planning Time: 0.308 ms
+Execution Time: 0.260 ms
+
+=== W32 run 2 ===
+Update on fines  (cost=0.28..8.30 rows=1 width=46) (actual time=0.193..0.194 rows=1 loops=1)
+  Buffers: shared hit=43
+  ->  Index Scan using ix_fines_unpaid on fines  (cost=0.28..8.30 rows=1 width=46) (actual time=0.017..0.018 rows=1 loops=1)
+        Index Cond: (order_id = 60)
+        Filter: (fine_status = 'UNPAID'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=88
+Planning Time: 0.246 ms
+Execution Time: 0.248 ms
+
+=== W32 run 3 ===
+Update on fines  (cost=0.28..8.30 rows=1 width=46) (actual time=0.198..0.199 rows=1 loops=1)
+  Buffers: shared hit=43
+  ->  Index Scan using ix_fines_unpaid on fines  (cost=0.28..8.30 rows=1 width=46) (actual time=0.019..0.020 rows=1 loops=1)
+        Index Cond: (order_id = 60)
+        Filter: (fine_status = 'UNPAID'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=88
+Planning Time: 0.276 ms
+Execution Time: 0.258 ms
+
+=== W32 run 4 ===
+Update on fines  (cost=0.28..8.30 rows=1 width=46) (actual time=0.165..0.166 rows=1 loops=1)
+  Buffers: shared hit=43
+  ->  Index Scan using ix_fines_unpaid on fines  (cost=0.28..8.30 rows=1 width=46) (actual time=0.016..0.017 rows=1 loops=1)
+        Index Cond: (order_id = 60)
+        Filter: (fine_status = 'UNPAID'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=88
+Planning Time: 0.243 ms
+Execution Time: 0.217 ms
+
+=== W32 run 5 ===
+Update on fines  (cost=0.28..8.30 rows=1 width=46) (actual time=0.149..0.150 rows=1 loops=1)
+  Buffers: shared hit=43
+  ->  Index Scan using ix_fines_unpaid on fines  (cost=0.28..8.30 rows=1 width=46) (actual time=0.015..0.015 rows=1 loops=1)
+        Index Cond: (order_id = 60)
+        Filter: (fine_status = 'UNPAID'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=88
+Planning Time: 0.225 ms
+Execution Time: 0.198 ms

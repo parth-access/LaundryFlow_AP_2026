@@ -1,0 +1,62 @@
+-- W35: Mark several orders ready
+-- parameters: ['{99,977,1223,1294,1493,2462,2686,2956,3349,4052,4320,4492,4883,5202,5421,5615,5808,6116,6533,6849}']
+
+=== W35 run 1 ===
+Update on orders  (cost=0.20..24.66 rows=1 width=46) (actual time=0.278..1.089 rows=20 loops=1)
+  Buffers: shared hit=674
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.20..24.66 rows=1 width=46) (actual time=0.012..0.477 rows=20 loops=1)
+        Filter: ((order_status = 'RECEIVED'::text) AND (order_id = ANY ('{99,977,1223,1294,1493,2462,2686,2956,3349,4052,4320,4492,4883,5202,5421,5615,5808,6116,6533,6849}'::integer[])))
+        Rows Removed by Filter: 317
+        Buffers: shared hit=291
+Planning:
+  Buffers: shared hit=244
+Planning Time: 0.524 ms
+Execution Time: 1.127 ms
+
+=== W35 run 2 ===
+Update on orders  (cost=0.20..24.66 rows=1 width=46) (actual time=0.236..0.902 rows=20 loops=1)
+  Buffers: shared hit=683
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.20..24.66 rows=1 width=46) (actual time=0.015..0.463 rows=20 loops=1)
+        Filter: ((order_status = 'RECEIVED'::text) AND (order_id = ANY ('{99,977,1223,1294,1493,2462,2686,2956,3349,4052,4320,4492,4883,5202,5421,5615,5808,6116,6533,6849}'::integer[])))
+        Rows Removed by Filter: 317
+        Buffers: shared hit=312
+Planning:
+  Buffers: shared hit=244
+Planning Time: 0.480 ms
+Execution Time: 0.944 ms
+
+=== W35 run 3 ===
+Update on orders  (cost=0.20..24.66 rows=1 width=46) (actual time=0.257..1.060 rows=20 loops=1)
+  Buffers: shared hit=701
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.20..24.66 rows=1 width=46) (actual time=0.017..0.501 rows=20 loops=1)
+        Filter: ((order_status = 'RECEIVED'::text) AND (order_id = ANY ('{99,977,1223,1294,1493,2462,2686,2956,3349,4052,4320,4492,4883,5202,5421,5615,5808,6116,6533,6849}'::integer[])))
+        Rows Removed by Filter: 317
+        Buffers: shared hit=312
+Planning:
+  Buffers: shared hit=244
+Planning Time: 0.529 ms
+Execution Time: 1.107 ms
+
+=== W35 run 4 ===
+Update on orders  (cost=0.20..24.66 rows=1 width=46) (actual time=0.216..0.946 rows=20 loops=1)
+  Buffers: shared hit=692 dirtied=1 written=1
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.20..24.66 rows=1 width=46) (actual time=0.015..0.468 rows=20 loops=1)
+        Filter: ((order_status = 'RECEIVED'::text) AND (order_id = ANY ('{99,977,1223,1294,1493,2462,2686,2956,3349,4052,4320,4492,4883,5202,5421,5615,5808,6116,6533,6849}'::integer[])))
+        Rows Removed by Filter: 317
+        Buffers: shared hit=312
+Planning:
+  Buffers: shared hit=244
+Planning Time: 0.450 ms
+Execution Time: 0.980 ms
+
+=== W35 run 5 ===
+Update on orders  (cost=0.20..24.69 rows=1 width=46) (actual time=0.228..0.928 rows=20 loops=1)
+  Buffers: shared hit=681
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.20..24.69 rows=1 width=46) (actual time=0.013..0.453 rows=20 loops=1)
+        Filter: ((order_status = 'RECEIVED'::text) AND (order_id = ANY ('{99,977,1223,1294,1493,2462,2686,2956,3349,4052,4320,4492,4883,5202,5421,5615,5808,6116,6533,6849}'::integer[])))
+        Rows Removed by Filter: 317
+        Buffers: shared hit=312
+Planning:
+  Buffers: shared hit=244
+Planning Time: 3.966 ms
+Execution Time: 0.969 ms

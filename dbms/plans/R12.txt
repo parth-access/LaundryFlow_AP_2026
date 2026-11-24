@@ -1,0 +1,117 @@
+-- R12: A student's fines
+-- parameters: ['1']
+
+=== R12 run 1 ===
+Sort  (cost=221.48..221.50 rows=7 width=67) (actual time=0.099..0.100 rows=8 loops=1)
+  Sort Key: ((f.fine_status = 'UNPAID'::text)) DESC, o.received_at DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=70
+  ->  Nested Loop  (cost=0.57..221.38 rows=7 width=67) (actual time=0.032..0.067 rows=8 loops=1)
+        Join Filter: (p.policy_id = o.policy_id)
+        Buffers: shared hit=62
+        ->  Seq Scan on policies p  (cost=0.00..1.01 rows=1 width=13) (actual time=0.003..0.004 rows=1 loops=1)
+              Buffers: shared hit=1
+        ->  Nested Loop  (cost=0.57..220.27 rows=7 width=61) (actual time=0.022..0.056 rows=8 loops=1)
+              Buffers: shared hit=61
+              ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=20) (actual time=0.010..0.014 rows=25 loops=1)
+                    Index Cond: (student_id = 1)
+                    Buffers: shared hit=3
+              ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=45) (actual time=0.001..0.001 rows=0 loops=25)
+                    Index Cond: (order_id = o.order_id)
+                    Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=361
+Planning Time: 0.931 ms
+Execution Time: 0.151 ms
+
+=== R12 run 2 ===
+Sort  (cost=221.48..221.50 rows=7 width=67) (actual time=0.066..0.067 rows=8 loops=1)
+  Sort Key: ((f.fine_status = 'UNPAID'::text)) DESC, o.received_at DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=70
+  ->  Nested Loop  (cost=0.57..221.38 rows=7 width=67) (actual time=0.024..0.042 rows=8 loops=1)
+        Join Filter: (p.policy_id = o.policy_id)
+        Buffers: shared hit=62
+        ->  Seq Scan on policies p  (cost=0.00..1.01 rows=1 width=13) (actual time=0.003..0.003 rows=1 loops=1)
+              Buffers: shared hit=1
+        ->  Nested Loop  (cost=0.57..220.27 rows=7 width=61) (actual time=0.016..0.033 rows=8 loops=1)
+              Buffers: shared hit=61
+              ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=20) (actual time=0.006..0.009 rows=25 loops=1)
+                    Index Cond: (student_id = 1)
+                    Buffers: shared hit=3
+              ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=45) (actual time=0.001..0.001 rows=0 loops=25)
+                    Index Cond: (order_id = o.order_id)
+                    Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=361
+Planning Time: 0.715 ms
+Execution Time: 0.109 ms
+
+=== R12 run 3 ===
+Sort  (cost=221.48..221.50 rows=7 width=67) (actual time=0.064..0.065 rows=8 loops=1)
+  Sort Key: ((f.fine_status = 'UNPAID'::text)) DESC, o.received_at DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=70
+  ->  Nested Loop  (cost=0.57..221.38 rows=7 width=67) (actual time=0.023..0.041 rows=8 loops=1)
+        Join Filter: (p.policy_id = o.policy_id)
+        Buffers: shared hit=62
+        ->  Seq Scan on policies p  (cost=0.00..1.01 rows=1 width=13) (actual time=0.002..0.003 rows=1 loops=1)
+              Buffers: shared hit=1
+        ->  Nested Loop  (cost=0.57..220.27 rows=7 width=61) (actual time=0.016..0.032 rows=8 loops=1)
+              Buffers: shared hit=61
+              ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=20) (actual time=0.006..0.008 rows=25 loops=1)
+                    Index Cond: (student_id = 1)
+                    Buffers: shared hit=3
+              ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=45) (actual time=0.001..0.001 rows=0 loops=25)
+                    Index Cond: (order_id = o.order_id)
+                    Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=361
+Planning Time: 0.681 ms
+Execution Time: 0.103 ms
+
+=== R12 run 4 ===
+Sort  (cost=221.48..221.50 rows=7 width=67) (actual time=0.064..0.065 rows=8 loops=1)
+  Sort Key: ((f.fine_status = 'UNPAID'::text)) DESC, o.received_at DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=70
+  ->  Nested Loop  (cost=0.57..221.38 rows=7 width=67) (actual time=0.022..0.040 rows=8 loops=1)
+        Join Filter: (p.policy_id = o.policy_id)
+        Buffers: shared hit=62
+        ->  Seq Scan on policies p  (cost=0.00..1.01 rows=1 width=13) (actual time=0.003..0.003 rows=1 loops=1)
+              Buffers: shared hit=1
+        ->  Nested Loop  (cost=0.57..220.27 rows=7 width=61) (actual time=0.015..0.031 rows=8 loops=1)
+              Buffers: shared hit=61
+              ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=20) (actual time=0.006..0.008 rows=25 loops=1)
+                    Index Cond: (student_id = 1)
+                    Buffers: shared hit=3
+              ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=45) (actual time=0.001..0.001 rows=0 loops=25)
+                    Index Cond: (order_id = o.order_id)
+                    Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=361
+Planning Time: 0.666 ms
+Execution Time: 0.102 ms
+
+=== R12 run 5 ===
+Sort  (cost=221.48..221.50 rows=7 width=67) (actual time=0.059..0.060 rows=8 loops=1)
+  Sort Key: ((f.fine_status = 'UNPAID'::text)) DESC, o.received_at DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=70
+  ->  Nested Loop  (cost=0.57..221.38 rows=7 width=67) (actual time=0.021..0.038 rows=8 loops=1)
+        Join Filter: (p.policy_id = o.policy_id)
+        Buffers: shared hit=62
+        ->  Seq Scan on policies p  (cost=0.00..1.01 rows=1 width=13) (actual time=0.003..0.003 rows=1 loops=1)
+              Buffers: shared hit=1
+        ->  Nested Loop  (cost=0.57..220.27 rows=7 width=61) (actual time=0.014..0.029 rows=8 loops=1)
+              Buffers: shared hit=61
+              ->  Index Scan using ix_orders_student on orders o  (cost=0.29..49.01 rows=24 width=20) (actual time=0.006..0.008 rows=25 loops=1)
+                    Index Cond: (student_id = 1)
+                    Buffers: shared hit=3
+              ->  Index Scan using fines_pkey on fines f  (cost=0.29..7.14 rows=1 width=45) (actual time=0.001..0.001 rows=0 loops=25)
+                    Index Cond: (order_id = o.order_id)
+                    Buffers: shared hit=58
+Planning:
+  Buffers: shared hit=361
+Planning Time: 0.693 ms
+Execution Time: 0.095 ms

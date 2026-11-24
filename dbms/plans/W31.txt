@@ -1,0 +1,67 @@
+-- W31: Mark order collected
+-- parameters: ['1763', '2']
+
+=== W31 run 1 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=50) (actual time=0.227..0.228 rows=1 loops=1)
+  Buffers: shared hit=46
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=50) (actual time=0.014..0.014 rows=1 loops=1)
+        Index Cond: (order_id = 1763)
+        Filter: (order_status = 'READY'::text)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.417 ms
+Trigger for constraint orders_collected_by_fkey: time=0.226 calls=1
+Execution Time: 0.491 ms
+
+=== W31 run 2 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=50) (actual time=0.270..0.271 rows=1 loops=1)
+  Buffers: shared hit=48
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=50) (actual time=0.030..0.032 rows=1 loops=1)
+        Index Cond: (order_id = 1763)
+        Filter: (order_status = 'READY'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.417 ms
+Trigger for constraint orders_collected_by_fkey: time=0.237 calls=1
+Execution Time: 0.547 ms
+
+=== W31 run 3 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=50) (actual time=0.281..0.284 rows=1 loops=1)
+  Buffers: shared hit=48
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=50) (actual time=0.022..0.024 rows=1 loops=1)
+        Index Cond: (order_id = 1763)
+        Filter: (order_status = 'READY'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.524 ms
+Trigger for constraint orders_collected_by_fkey: time=0.253 calls=1
+Execution Time: 0.601 ms
+
+=== W31 run 4 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=50) (actual time=0.231..0.233 rows=1 loops=1)
+  Buffers: shared hit=48
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=50) (actual time=0.020..0.021 rows=1 loops=1)
+        Index Cond: (order_id = 1763)
+        Filter: (order_status = 'READY'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.452 ms
+Trigger for constraint orders_collected_by_fkey: time=0.254 calls=1
+Execution Time: 0.525 ms
+
+=== W31 run 5 ===
+Update on orders  (cost=0.29..8.31 rows=1 width=50) (actual time=0.250..0.252 rows=1 loops=1)
+  Buffers: shared hit=48
+  ->  Index Scan using orders_pkey on orders  (cost=0.29..8.31 rows=1 width=50) (actual time=0.021..0.023 rows=1 loops=1)
+        Index Cond: (order_id = 1763)
+        Filter: (order_status = 'READY'::text)
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.477 ms
+Trigger for constraint orders_collected_by_fkey: time=0.285 calls=1
+Execution Time: 0.590 ms

@@ -1,0 +1,62 @@
+-- W12: Change the clothes count on a hand-in
+-- parameters: ['1715', '70', '12']
+
+=== W12 run 1 ===
+Update on orders  (cost=0.15..8.17 rows=1 width=10) (actual time=0.299..0.301 rows=1 loops=1)
+  Buffers: shared hit=49
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=10) (actual time=0.010..0.011 rows=1 loops=1)
+        Index Cond: (student_id = 70)
+        Filter: ((order_id = 1715) AND (order_status = 'SUBMITTED'::text))
+        Buffers: shared hit=2
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.410 ms
+Execution Time: 0.343 ms
+
+=== W12 run 2 ===
+Update on orders  (cost=0.15..8.17 rows=1 width=10) (actual time=0.247..0.249 rows=1 loops=1)
+  Buffers: shared hit=53
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=10) (actual time=0.019..0.020 rows=1 loops=1)
+        Index Cond: (student_id = 70)
+        Filter: ((order_id = 1715) AND (order_status = 'SUBMITTED'::text))
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.439 ms
+Execution Time: 0.293 ms
+
+=== W12 run 3 ===
+Update on orders  (cost=0.15..8.17 rows=1 width=10) (actual time=0.248..0.250 rows=1 loops=1)
+  Buffers: shared hit=53
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=10) (actual time=0.017..0.018 rows=1 loops=1)
+        Index Cond: (student_id = 70)
+        Filter: ((order_id = 1715) AND (order_status = 'SUBMITTED'::text))
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.447 ms
+Execution Time: 0.326 ms
+
+=== W12 run 4 ===
+Update on orders  (cost=0.15..8.17 rows=1 width=10) (actual time=0.228..0.230 rows=1 loops=1)
+  Buffers: shared hit=53
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=10) (actual time=0.013..0.014 rows=1 loops=1)
+        Index Cond: (student_id = 70)
+        Filter: ((order_id = 1715) AND (order_status = 'SUBMITTED'::text))
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.545 ms
+Execution Time: 0.272 ms
+
+=== W12 run 5 ===
+Update on orders  (cost=0.15..8.17 rows=1 width=10) (actual time=0.280..0.283 rows=1 loops=1)
+  Buffers: shared hit=53
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=10) (actual time=0.016..0.018 rows=1 loops=1)
+        Index Cond: (student_id = 70)
+        Filter: ((order_id = 1715) AND (order_status = 'SUBMITTED'::text))
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=205
+Planning Time: 0.431 ms
+Execution Time: 0.328 ms

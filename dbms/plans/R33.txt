@@ -1,0 +1,202 @@
+-- R33: Settled fines (history)
+-- parameters: []
+
+=== R33 run 1 ===
+Limit  (cost=2279.58..2279.70 rows=50 width=93) (actual time=25.506..25.516 rows=50 loops=1)
+  Buffers: shared hit=770
+  ->  Sort  (cost=2279.58..2312.62 rows=13218 width=93) (actual time=25.504..25.510 rows=50 loops=1)
+        Sort Key: (COALESCE(f.fine_paid_at, o.received_at)) DESC
+        Sort Method: top-N heapsort  Memory: 36kB
+        Buffers: shared hit=770
+        ->  Hash Left Join  (cost=511.64..1840.48 rows=13218 width=93) (actual time=4.314..22.063 rows=13218 loops=1)
+              Hash Cond: (f.waived_by = w.staff_id)
+              Buffers: shared hit=767
+              ->  Hash Join  (cost=510.38..1803.78 rows=13218 width=74) (actual time=4.291..20.237 rows=13218 loops=1)
+                    Hash Cond: (o.student_id = s.student_id)
+                    Buffers: shared hit=766
+                    ->  Hash Join  (cost=435.38..1694.01 rows=13218 width=61) (actual time=3.700..17.107 rows=13218 loops=1)
+                          Hash Cond: (o.order_id = f.order_id)
+                          Buffers: shared hit=736
+                          ->  Seq Scan on orders o  (cost=0.00..1130.62 rows=48762 width=16) (actual time=0.002..3.742 rows=48762 loops=1)
+                                Buffers: shared hit=643
+                          ->  Hash  (cost=270.15..270.15 rows=13218 width=49) (actual time=3.643..3.644 rows=13218 loops=1)
+                                Buckets: 16384  Batches: 1  Memory Usage: 869kB
+                                Buffers: shared hit=93
+                                ->  Seq Scan on fines f  (cost=0.00..270.15 rows=13218 width=49) (actual time=0.005..1.784 rows=13218 loops=1)
+                                      Filter: (fine_status = ANY ('{PAID,WAIVED}'::text[]))
+                                      Rows Removed by Filter: 954
+                                      Buffers: shared hit=93
+                    ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.581..0.581 rows=2000 loops=1)
+                          Buckets: 2048  Batches: 1  Memory Usage: 128kB
+                          Buffers: shared hit=30
+                          ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.006..0.221 rows=2000 loops=1)
+                                Buffers: shared hit=30
+              ->  Hash  (cost=1.12..1.12 rows=12 width=19) (actual time=0.008..0.009 rows=12 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on staff w  (cost=0.00..1.12 rows=12 width=19) (actual time=0.004..0.005 rows=12 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=512
+Planning Time: 1.785 ms
+Execution Time: 25.606 ms
+
+=== R33 run 2 ===
+Limit  (cost=2279.58..2279.70 rows=50 width=93) (actual time=20.835..20.845 rows=50 loops=1)
+  Buffers: shared hit=770
+  ->  Sort  (cost=2279.58..2312.62 rows=13218 width=93) (actual time=20.833..20.840 rows=50 loops=1)
+        Sort Key: (COALESCE(f.fine_paid_at, o.received_at)) DESC
+        Sort Method: top-N heapsort  Memory: 36kB
+        Buffers: shared hit=770
+        ->  Hash Left Join  (cost=511.64..1840.48 rows=13218 width=93) (actual time=4.096..18.132 rows=13218 loops=1)
+              Hash Cond: (f.waived_by = w.staff_id)
+              Buffers: shared hit=767
+              ->  Hash Join  (cost=510.38..1803.78 rows=13218 width=74) (actual time=4.077..16.610 rows=13218 loops=1)
+                    Hash Cond: (o.student_id = s.student_id)
+                    Buffers: shared hit=766
+                    ->  Hash Join  (cost=435.38..1694.01 rows=13218 width=61) (actual time=3.532..14.095 rows=13218 loops=1)
+                          Hash Cond: (o.order_id = f.order_id)
+                          Buffers: shared hit=736
+                          ->  Seq Scan on orders o  (cost=0.00..1130.62 rows=48762 width=16) (actual time=0.002..3.192 rows=48762 loops=1)
+                                Buffers: shared hit=643
+                          ->  Hash  (cost=270.15..270.15 rows=13218 width=49) (actual time=3.477..3.479 rows=13218 loops=1)
+                                Buckets: 16384  Batches: 1  Memory Usage: 869kB
+                                Buffers: shared hit=93
+                                ->  Seq Scan on fines f  (cost=0.00..270.15 rows=13218 width=49) (actual time=0.004..1.730 rows=13218 loops=1)
+                                      Filter: (fine_status = ANY ('{PAID,WAIVED}'::text[]))
+                                      Rows Removed by Filter: 954
+                                      Buffers: shared hit=93
+                    ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.535..0.536 rows=2000 loops=1)
+                          Buckets: 2048  Batches: 1  Memory Usage: 128kB
+                          Buffers: shared hit=30
+                          ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.005..0.198 rows=2000 loops=1)
+                                Buffers: shared hit=30
+              ->  Hash  (cost=1.12..1.12 rows=12 width=19) (actual time=0.007..0.008 rows=12 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on staff w  (cost=0.00..1.12 rows=12 width=19) (actual time=0.003..0.004 rows=12 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=512
+Planning Time: 1.102 ms
+Execution Time: 20.933 ms
+
+=== R33 run 3 ===
+Limit  (cost=2279.58..2279.70 rows=50 width=93) (actual time=19.822..19.831 rows=50 loops=1)
+  Buffers: shared hit=770
+  ->  Sort  (cost=2279.58..2312.62 rows=13218 width=93) (actual time=19.821..19.827 rows=50 loops=1)
+        Sort Key: (COALESCE(f.fine_paid_at, o.received_at)) DESC
+        Sort Method: top-N heapsort  Memory: 36kB
+        Buffers: shared hit=770
+        ->  Hash Left Join  (cost=511.64..1840.48 rows=13218 width=93) (actual time=3.443..17.180 rows=13218 loops=1)
+              Hash Cond: (f.waived_by = w.staff_id)
+              Buffers: shared hit=767
+              ->  Hash Join  (cost=510.38..1803.78 rows=13218 width=74) (actual time=3.425..15.765 rows=13218 loops=1)
+                    Hash Cond: (o.student_id = s.student_id)
+                    Buffers: shared hit=766
+                    ->  Hash Join  (cost=435.38..1694.01 rows=13218 width=61) (actual time=2.984..13.463 rows=13218 loops=1)
+                          Hash Cond: (o.order_id = f.order_id)
+                          Buffers: shared hit=736
+                          ->  Seq Scan on orders o  (cost=0.00..1130.62 rows=48762 width=16) (actual time=0.001..3.117 rows=48762 loops=1)
+                                Buffers: shared hit=643
+                          ->  Hash  (cost=270.15..270.15 rows=13218 width=49) (actual time=2.939..2.940 rows=13218 loops=1)
+                                Buckets: 16384  Batches: 1  Memory Usage: 869kB
+                                Buffers: shared hit=93
+                                ->  Seq Scan on fines f  (cost=0.00..270.15 rows=13218 width=49) (actual time=0.004..1.444 rows=13218 loops=1)
+                                      Filter: (fine_status = ANY ('{PAID,WAIVED}'::text[]))
+                                      Rows Removed by Filter: 954
+                                      Buffers: shared hit=93
+                    ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.431..0.432 rows=2000 loops=1)
+                          Buckets: 2048  Batches: 1  Memory Usage: 128kB
+                          Buffers: shared hit=30
+                          ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.005..0.176 rows=2000 loops=1)
+                                Buffers: shared hit=30
+              ->  Hash  (cost=1.12..1.12 rows=12 width=19) (actual time=0.007..0.007 rows=12 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on staff w  (cost=0.00..1.12 rows=12 width=19) (actual time=0.003..0.004 rows=12 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=512
+Planning Time: 0.976 ms
+Execution Time: 19.895 ms
+
+=== R33 run 4 ===
+Limit  (cost=2279.58..2279.70 rows=50 width=93) (actual time=18.553..18.562 rows=50 loops=1)
+  Buffers: shared hit=770
+  ->  Sort  (cost=2279.58..2312.62 rows=13218 width=93) (actual time=18.551..18.558 rows=50 loops=1)
+        Sort Key: (COALESCE(f.fine_paid_at, o.received_at)) DESC
+        Sort Method: top-N heapsort  Memory: 36kB
+        Buffers: shared hit=770
+        ->  Hash Left Join  (cost=511.64..1840.48 rows=13218 width=93) (actual time=3.760..16.111 rows=13218 loops=1)
+              Hash Cond: (f.waived_by = w.staff_id)
+              Buffers: shared hit=767
+              ->  Hash Join  (cost=510.38..1803.78 rows=13218 width=74) (actual time=3.742..14.798 rows=13218 loops=1)
+                    Hash Cond: (o.student_id = s.student_id)
+                    Buffers: shared hit=766
+                    ->  Hash Join  (cost=435.38..1694.01 rows=13218 width=61) (actual time=3.233..12.577 rows=13218 loops=1)
+                          Hash Cond: (o.order_id = f.order_id)
+                          Buffers: shared hit=736
+                          ->  Seq Scan on orders o  (cost=0.00..1130.62 rows=48762 width=16) (actual time=0.002..2.798 rows=48762 loops=1)
+                                Buffers: shared hit=643
+                          ->  Hash  (cost=270.15..270.15 rows=13218 width=49) (actual time=3.172..3.173 rows=13218 loops=1)
+                                Buckets: 16384  Batches: 1  Memory Usage: 869kB
+                                Buffers: shared hit=93
+                                ->  Seq Scan on fines f  (cost=0.00..270.15 rows=13218 width=49) (actual time=0.005..1.532 rows=13218 loops=1)
+                                      Filter: (fine_status = ANY ('{PAID,WAIVED}'::text[]))
+                                      Rows Removed by Filter: 954
+                                      Buffers: shared hit=93
+                    ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.497..0.498 rows=2000 loops=1)
+                          Buckets: 2048  Batches: 1  Memory Usage: 128kB
+                          Buffers: shared hit=30
+                          ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.006..0.193 rows=2000 loops=1)
+                                Buffers: shared hit=30
+              ->  Hash  (cost=1.12..1.12 rows=12 width=19) (actual time=0.007..0.008 rows=12 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on staff w  (cost=0.00..1.12 rows=12 width=19) (actual time=0.003..0.004 rows=12 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=512
+Planning Time: 0.999 ms
+Execution Time: 18.642 ms
+
+=== R33 run 5 ===
+Limit  (cost=2279.58..2279.70 rows=50 width=93) (actual time=18.295..18.304 rows=50 loops=1)
+  Buffers: shared hit=770
+  ->  Sort  (cost=2279.58..2312.62 rows=13218 width=93) (actual time=18.294..18.300 rows=50 loops=1)
+        Sort Key: (COALESCE(f.fine_paid_at, o.received_at)) DESC
+        Sort Method: top-N heapsort  Memory: 36kB
+        Buffers: shared hit=770
+        ->  Hash Left Join  (cost=511.64..1840.48 rows=13218 width=93) (actual time=3.807..15.927 rows=13218 loops=1)
+              Hash Cond: (f.waived_by = w.staff_id)
+              Buffers: shared hit=767
+              ->  Hash Join  (cost=510.38..1803.78 rows=13218 width=74) (actual time=3.776..14.592 rows=13218 loops=1)
+                    Hash Cond: (o.student_id = s.student_id)
+                    Buffers: shared hit=766
+                    ->  Hash Join  (cost=435.38..1694.01 rows=13218 width=61) (actual time=3.228..12.392 rows=13218 loops=1)
+                          Hash Cond: (o.order_id = f.order_id)
+                          Buffers: shared hit=736
+                          ->  Seq Scan on orders o  (cost=0.00..1130.62 rows=48762 width=16) (actual time=0.002..2.726 rows=48762 loops=1)
+                                Buffers: shared hit=643
+                          ->  Hash  (cost=270.15..270.15 rows=13218 width=49) (actual time=3.172..3.172 rows=13218 loops=1)
+                                Buckets: 16384  Batches: 1  Memory Usage: 869kB
+                                Buffers: shared hit=93
+                                ->  Seq Scan on fines f  (cost=0.00..270.15 rows=13218 width=49) (actual time=0.004..1.551 rows=13218 loops=1)
+                                      Filter: (fine_status = ANY ('{PAID,WAIVED}'::text[]))
+                                      Rows Removed by Filter: 954
+                                      Buffers: shared hit=93
+                    ->  Hash  (cost=50.00..50.00 rows=2000 width=21) (actual time=0.539..0.539 rows=2000 loops=1)
+                          Buckets: 2048  Batches: 1  Memory Usage: 128kB
+                          Buffers: shared hit=30
+                          ->  Seq Scan on students s  (cost=0.00..50.00 rows=2000 width=21) (actual time=0.005..0.207 rows=2000 loops=1)
+                                Buffers: shared hit=30
+              ->  Hash  (cost=1.12..1.12 rows=12 width=19) (actual time=0.007..0.008 rows=12 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                    Buffers: shared hit=1
+                    ->  Seq Scan on staff w  (cost=0.00..1.12 rows=12 width=19) (actual time=0.004..0.005 rows=12 loops=1)
+                          Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=512
+Planning Time: 0.933 ms
+Execution Time: 18.369 ms

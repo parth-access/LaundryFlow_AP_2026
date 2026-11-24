@@ -1,0 +1,67 @@
+-- W22: Verify a bag tag
+-- parameters: ['4', '2']
+
+=== W22 run 1 ===
+Update on students  (cost=0.28..8.30 rows=1 width=18) (actual time=0.338..0.339 rows=1 loops=1)
+  Buffers: shared hit=60
+  ->  Index Scan using students_pkey on students  (cost=0.28..8.30 rows=1 width=18) (actual time=0.016..0.017 rows=1 loops=1)
+        Index Cond: (student_id = 4)
+        Filter: (is_active AND (bag_verified_at IS NULL))
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=142
+Planning Time: 0.300 ms
+Trigger for constraint students_bag_verified_by_fkey: time=0.227 calls=1
+Execution Time: 0.615 ms
+
+=== W22 run 2 ===
+Update on students  (cost=0.28..8.30 rows=1 width=18) (actual time=0.307..0.309 rows=1 loops=1)
+  Buffers: shared hit=65
+  ->  Index Scan using students_pkey on students  (cost=0.28..8.30 rows=1 width=18) (actual time=0.021..0.023 rows=1 loops=1)
+        Index Cond: (student_id = 4)
+        Filter: (is_active AND (bag_verified_at IS NULL))
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=142
+Planning Time: 0.285 ms
+Trigger for constraint students_bag_verified_by_fkey: time=0.240 calls=1
+Execution Time: 0.597 ms
+
+=== W22 run 3 ===
+Update on students  (cost=0.28..8.30 rows=1 width=18) (actual time=0.357..0.360 rows=1 loops=1)
+  Buffers: shared hit=65
+  ->  Index Scan using students_pkey on students  (cost=0.28..8.30 rows=1 width=18) (actual time=0.032..0.034 rows=1 loops=1)
+        Index Cond: (student_id = 4)
+        Filter: (is_active AND (bag_verified_at IS NULL))
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=142
+Planning Time: 0.339 ms
+Trigger for constraint students_bag_verified_by_fkey: time=0.247 calls=1
+Execution Time: 0.696 ms
+
+=== W22 run 4 ===
+Update on students  (cost=0.28..8.30 rows=1 width=18) (actual time=0.365..0.367 rows=1 loops=1)
+  Buffers: shared hit=65
+  ->  Index Scan using students_pkey on students  (cost=0.28..8.30 rows=1 width=18) (actual time=0.026..0.028 rows=1 loops=1)
+        Index Cond: (student_id = 4)
+        Filter: (is_active AND (bag_verified_at IS NULL))
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=142
+Planning Time: 0.384 ms
+Trigger for constraint students_bag_verified_by_fkey: time=0.308 calls=1
+Execution Time: 0.737 ms
+
+=== W22 run 5 ===
+Update on students  (cost=0.28..8.30 rows=1 width=18) (actual time=0.378..0.381 rows=1 loops=1)
+  Buffers: shared hit=65
+  ->  Index Scan using students_pkey on students  (cost=0.28..8.30 rows=1 width=18) (actual time=0.027..0.030 rows=1 loops=1)
+        Index Cond: (student_id = 4)
+        Filter: (is_active AND (bag_verified_at IS NULL))
+        Buffers: shared hit=5
+Planning:
+  Buffers: shared hit=142
+Planning Time: 0.332 ms
+Trigger for constraint students_bag_verified_by_fkey: time=0.273 calls=1
+Execution Time: 0.717 ms

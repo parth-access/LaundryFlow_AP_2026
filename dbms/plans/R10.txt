@@ -1,0 +1,57 @@
+-- R10: Check student's active laundry order
+-- parameters: ['1']
+
+=== R10 run 1 ===
+Limit  (cost=0.15..8.17 rows=1 width=13) (actual time=0.014..0.014 rows=0 loops=1)
+  Buffers: shared hit=3
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=13) (actual time=0.013..0.013 rows=0 loops=1)
+        Index Cond: (student_id = 1)
+        Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=198
+Planning Time: 0.474 ms
+Execution Time: 0.026 ms
+
+=== R10 run 2 ===
+Limit  (cost=0.15..8.17 rows=1 width=13) (actual time=0.029..0.029 rows=0 loops=1)
+  Buffers: shared hit=1
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=13) (actual time=0.028..0.028 rows=0 loops=1)
+        Index Cond: (student_id = 1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=198
+Planning Time: 0.475 ms
+Execution Time: 0.041 ms
+
+=== R10 run 3 ===
+Limit  (cost=0.15..8.17 rows=1 width=13) (actual time=0.007..0.007 rows=0 loops=1)
+  Buffers: shared hit=1
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=13) (actual time=0.006..0.006 rows=0 loops=1)
+        Index Cond: (student_id = 1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=198
+Planning Time: 0.500 ms
+Execution Time: 0.020 ms
+
+=== R10 run 4 ===
+Limit  (cost=0.15..8.17 rows=1 width=13) (actual time=0.007..0.007 rows=0 loops=1)
+  Buffers: shared hit=1
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=13) (actual time=0.006..0.006 rows=0 loops=1)
+        Index Cond: (student_id = 1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=198
+Planning Time: 0.481 ms
+Execution Time: 0.020 ms
+
+=== R10 run 5 ===
+Limit  (cost=0.15..8.17 rows=1 width=13) (actual time=0.005..0.006 rows=0 loops=1)
+  Buffers: shared hit=1
+  ->  Index Scan using uq_orders_one_open_per_student on orders  (cost=0.15..8.17 rows=1 width=13) (actual time=0.005..0.005 rows=0 loops=1)
+        Index Cond: (student_id = 1)
+        Buffers: shared hit=1
+Planning:
+  Buffers: shared hit=198
+Planning Time: 0.404 ms
+Execution Time: 0.017 ms

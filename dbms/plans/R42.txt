@@ -1,0 +1,167 @@
+-- R42: Numbers at a glance
+-- parameters: []
+
+=== R42 run 1 ===
+Result  (cost=1958.14..1958.15 rows=1 width=44) (actual time=20.378..20.380 rows=1 loops=1)
+  Buffers: shared hit=767
+  InitPlan 1 (returns $0)
+    ->  Aggregate  (cost=1865.56..1865.57 rows=1 width=4) (actual time=19.842..19.843 rows=1 loops=1)
+          Buffers: shared hit=644
+          ->  Seq Scan on orders  (cost=0.00..1864.95 rows=244 width=0) (actual time=19.839..19.839 rows=0 loops=1)
+                Filter: (((submitted_at AT TIME ZONE 'Asia/Kolkata'::text))::date = ((now() AT TIME ZONE 'Asia/Kolkata'::text))::date)
+                Rows Removed by Filter: 48762
+                Buffers: shared hit=644
+  InitPlan 2 (returns $1)
+    ->  Aggregate  (cost=8.59..8.61 rows=1 width=4) (actual time=0.054..0.054 rows=1 loops=1)
+          Buffers: shared hit=21
+          ->  Index Only Scan using ix_orders_open on orders orders_1  (cost=0.27..8.55 rows=16 width=0) (actual time=0.035..0.050 rows=15 loops=1)
+                Index Cond: (order_status = 'SUBMITTED'::text)
+                Heap Fetches: 18
+                Buffers: shared hit=21
+  InitPlan 3 (returns $2)
+    ->  Aggregate  (cost=36.97..36.98 rows=1 width=4) (actual time=0.138..0.138 rows=1 loops=1)
+          Buffers: shared hit=6
+          ->  Index Only Scan using ix_fines_unpaid on fines  (cost=0.28..34.59 rows=954 width=0) (actual time=0.027..0.093 rows=954 loops=1)
+                Heap Fetches: 14
+                Buffers: shared hit=6
+  InitPlan 4 (returns $3)
+    ->  Aggregate  (cost=46.97..46.98 rows=1 width=32) (actual time=0.337..0.337 rows=1 loops=1)
+          Buffers: shared hit=96
+          ->  Index Scan using ix_fines_unpaid on fines fines_1  (cost=0.28..44.58 rows=954 width=5) (actual time=0.013..0.251 rows=954 loops=1)
+                Buffers: shared hit=96
+Planning:
+  Buffers: shared hit=249
+Planning Time: 0.837 ms
+Execution Time: 20.441 ms
+
+=== R42 run 2 ===
+Result  (cost=1958.14..1958.15 rows=1 width=44) (actual time=19.096..19.098 rows=1 loops=1)
+  Buffers: shared hit=752
+  InitPlan 1 (returns $0)
+    ->  Aggregate  (cost=1865.56..1865.57 rows=1 width=4) (actual time=18.532..18.533 rows=1 loops=1)
+          Buffers: shared hit=644
+          ->  Seq Scan on orders  (cost=0.00..1864.95 rows=244 width=0) (actual time=18.528..18.529 rows=0 loops=1)
+                Filter: (((submitted_at AT TIME ZONE 'Asia/Kolkata'::text))::date = ((now() AT TIME ZONE 'Asia/Kolkata'::text))::date)
+                Rows Removed by Filter: 48762
+                Buffers: shared hit=644
+  InitPlan 2 (returns $1)
+    ->  Aggregate  (cost=8.59..8.61 rows=1 width=4) (actual time=0.052..0.052 rows=1 loops=1)
+          Buffers: shared hit=6
+          ->  Index Only Scan using ix_orders_open on orders orders_1  (cost=0.27..8.55 rows=16 width=0) (actual time=0.041..0.048 rows=15 loops=1)
+                Index Cond: (order_status = 'SUBMITTED'::text)
+                Heap Fetches: 3
+                Buffers: shared hit=6
+  InitPlan 3 (returns $2)
+    ->  Aggregate  (cost=36.97..36.98 rows=1 width=4) (actual time=0.138..0.139 rows=1 loops=1)
+          Buffers: shared hit=6
+          ->  Index Only Scan using ix_fines_unpaid on fines  (cost=0.28..34.59 rows=954 width=0) (actual time=0.026..0.093 rows=954 loops=1)
+                Heap Fetches: 14
+                Buffers: shared hit=6
+  InitPlan 4 (returns $3)
+    ->  Aggregate  (cost=46.97..46.98 rows=1 width=32) (actual time=0.366..0.366 rows=1 loops=1)
+          Buffers: shared hit=96
+          ->  Index Scan using ix_fines_unpaid on fines fines_1  (cost=0.28..44.58 rows=954 width=5) (actual time=0.014..0.272 rows=954 loops=1)
+                Buffers: shared hit=96
+Planning:
+  Buffers: shared hit=249
+Planning Time: 0.919 ms
+Execution Time: 19.173 ms
+
+=== R42 run 3 ===
+Result  (cost=1958.14..1958.15 rows=1 width=44) (actual time=18.621..18.623 rows=1 loops=1)
+  Buffers: shared hit=752
+  InitPlan 1 (returns $0)
+    ->  Aggregate  (cost=1865.56..1865.57 rows=1 width=4) (actual time=18.077..18.078 rows=1 loops=1)
+          Buffers: shared hit=644
+          ->  Seq Scan on orders  (cost=0.00..1864.95 rows=244 width=0) (actual time=18.073..18.074 rows=0 loops=1)
+                Filter: (((submitted_at AT TIME ZONE 'Asia/Kolkata'::text))::date = ((now() AT TIME ZONE 'Asia/Kolkata'::text))::date)
+                Rows Removed by Filter: 48762
+                Buffers: shared hit=644
+  InitPlan 2 (returns $1)
+    ->  Aggregate  (cost=8.59..8.61 rows=1 width=4) (actual time=0.044..0.044 rows=1 loops=1)
+          Buffers: shared hit=6
+          ->  Index Only Scan using ix_orders_open on orders orders_1  (cost=0.27..8.55 rows=16 width=0) (actual time=0.034..0.040 rows=15 loops=1)
+                Index Cond: (order_status = 'SUBMITTED'::text)
+                Heap Fetches: 3
+                Buffers: shared hit=6
+  InitPlan 3 (returns $2)
+    ->  Aggregate  (cost=36.97..36.98 rows=1 width=4) (actual time=0.153..0.153 rows=1 loops=1)
+          Buffers: shared hit=6
+          ->  Index Only Scan using ix_fines_unpaid on fines  (cost=0.28..34.59 rows=954 width=0) (actual time=0.025..0.107 rows=954 loops=1)
+                Heap Fetches: 14
+                Buffers: shared hit=6
+  InitPlan 4 (returns $3)
+    ->  Aggregate  (cost=46.97..46.98 rows=1 width=32) (actual time=0.341..0.342 rows=1 loops=1)
+          Buffers: shared hit=96
+          ->  Index Scan using ix_fines_unpaid on fines fines_1  (cost=0.28..44.58 rows=954 width=5) (actual time=0.014..0.255 rows=954 loops=1)
+                Buffers: shared hit=96
+Planning:
+  Buffers: shared hit=249
+Planning Time: 0.790 ms
+Execution Time: 18.689 ms
+
+=== R42 run 4 ===
+Result  (cost=1958.14..1958.15 rows=1 width=44) (actual time=19.005..19.007 rows=1 loops=1)
+  Buffers: shared hit=752
+  InitPlan 1 (returns $0)
+    ->  Aggregate  (cost=1865.56..1865.57 rows=1 width=4) (actual time=18.404..18.405 rows=1 loops=1)
+          Buffers: shared hit=644
+          ->  Seq Scan on orders  (cost=0.00..1864.95 rows=244 width=0) (actual time=18.400..18.401 rows=0 loops=1)
+                Filter: (((submitted_at AT TIME ZONE 'Asia/Kolkata'::text))::date = ((now() AT TIME ZONE 'Asia/Kolkata'::text))::date)
+                Rows Removed by Filter: 48762
+                Buffers: shared hit=644
+  InitPlan 2 (returns $1)
+    ->  Aggregate  (cost=8.59..8.61 rows=1 width=4) (actual time=0.047..0.047 rows=1 loops=1)
+          Buffers: shared hit=6
+          ->  Index Only Scan using ix_orders_open on orders orders_1  (cost=0.27..8.55 rows=16 width=0) (actual time=0.037..0.043 rows=15 loops=1)
+                Index Cond: (order_status = 'SUBMITTED'::text)
+                Heap Fetches: 3
+                Buffers: shared hit=6
+  InitPlan 3 (returns $2)
+    ->  Aggregate  (cost=36.97..36.98 rows=1 width=4) (actual time=0.136..0.137 rows=1 loops=1)
+          Buffers: shared hit=6
+          ->  Index Only Scan using ix_fines_unpaid on fines  (cost=0.28..34.59 rows=954 width=0) (actual time=0.024..0.091 rows=954 loops=1)
+                Heap Fetches: 14
+                Buffers: shared hit=6
+  InitPlan 4 (returns $3)
+    ->  Aggregate  (cost=46.97..46.98 rows=1 width=32) (actual time=0.411..0.411 rows=1 loops=1)
+          Buffers: shared hit=96
+          ->  Index Scan using ix_fines_unpaid on fines fines_1  (cost=0.28..44.58 rows=954 width=5) (actual time=0.014..0.318 rows=954 loops=1)
+                Buffers: shared hit=96
+Planning:
+  Buffers: shared hit=249
+Planning Time: 0.839 ms
+Execution Time: 19.075 ms
+
+=== R42 run 5 ===
+Result  (cost=1958.14..1958.15 rows=1 width=44) (actual time=17.642..17.646 rows=1 loops=1)
+  Buffers: shared hit=752
+  InitPlan 1 (returns $0)
+    ->  Aggregate  (cost=1865.56..1865.57 rows=1 width=4) (actual time=16.670..16.670 rows=1 loops=1)
+          Buffers: shared hit=644
+          ->  Seq Scan on orders  (cost=0.00..1864.95 rows=244 width=0) (actual time=16.666..16.666 rows=0 loops=1)
+                Filter: (((submitted_at AT TIME ZONE 'Asia/Kolkata'::text))::date = ((now() AT TIME ZONE 'Asia/Kolkata'::text))::date)
+                Rows Removed by Filter: 48762
+                Buffers: shared hit=644
+  InitPlan 2 (returns $1)
+    ->  Aggregate  (cost=8.59..8.61 rows=1 width=4) (actual time=0.045..0.045 rows=1 loops=1)
+          Buffers: shared hit=6
+          ->  Index Only Scan using ix_orders_open on orders orders_1  (cost=0.27..8.55 rows=16 width=0) (actual time=0.036..0.041 rows=15 loops=1)
+                Index Cond: (order_status = 'SUBMITTED'::text)
+                Heap Fetches: 3
+                Buffers: shared hit=6
+  InitPlan 3 (returns $2)
+    ->  Aggregate  (cost=36.97..36.98 rows=1 width=4) (actual time=0.133..0.134 rows=1 loops=1)
+          Buffers: shared hit=6
+          ->  Index Only Scan using ix_fines_unpaid on fines  (cost=0.28..34.59 rows=954 width=0) (actual time=0.026..0.091 rows=954 loops=1)
+                Heap Fetches: 14
+                Buffers: shared hit=6
+  InitPlan 4 (returns $3)
+    ->  Aggregate  (cost=46.97..46.98 rows=1 width=32) (actual time=0.785..0.785 rows=1 loops=1)
+          Buffers: shared hit=96
+          ->  Index Scan using ix_fines_unpaid on fines fines_1  (cost=0.28..44.58 rows=954 width=5) (actual time=0.013..0.447 rows=954 loops=1)
+                Buffers: shared hit=96
+Planning:
+  Buffers: shared hit=249
+Planning Time: 0.781 ms
+Execution Time: 17.714 ms
