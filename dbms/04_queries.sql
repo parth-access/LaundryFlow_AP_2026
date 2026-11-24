@@ -383,18 +383,22 @@ ORDER BY effective_from DESC;
 
 -- R42: Numbers at a glance
 -- READ
--- Admin page: bags handed in today (India time), bags waiting to be counted, and the total of unpaid fines. Two aggregates joined into one row (CROSS JOIN): orders is read once for both of its counts (FILTER), fines once for the unpaid count and total.
+-- Admin page: bags handed in today (India time), bags waiting to be counted, and the total of unpaid fines. Three one-row aggregates joined into one row (CROSS JOIN). Each keeps its own index: waiting uses ix_orders_open, the fines use the partial ix_fines_unpaid. (Counting both order numbers in one pass with FILTER was tried: it loses the ix_orders_open index and was no faster.)
 -- Parameters: none
-SELECT o.orders_today, o.waiting, f.unpaid_count, f.unpaid_total
+SELECT t.orders_today, w.waiting, f.unpaid_count, f.unpaid_total
 FROM (
-  SELECT count(*) FILTER (WHERE (submitted_at AT TIME ZONE 'Asia/Kolkata')::date
-                                = (now() AT TIME ZONE 'Asia/Kolkata')::date)::int AS orders_today,
-         count(*) FILTER (WHERE order_status = 'SUBMITTED')::int                  AS waiting
+  SELECT count(*)::int AS orders_today
   FROM orders
-) o
+  WHERE (submitted_at AT TIME ZONE 'Asia/Kolkata')::date = (now() AT TIME ZONE 'Asia/Kolkata')::date
+) t
 CROSS JOIN (
-  SELECT count(*)::int                  AS unpaid_count,
-         coalesce(sum(fine_amount), 0)  AS unpaid_total
+  SELECT count(*)::int AS waiting
+  FROM orders
+  WHERE order_status = 'SUBMITTED'
+) w
+CROSS JOIN (
+  SELECT count(*)::int                 AS unpaid_count,
+         coalesce(sum(fine_amount), 0) AS unpaid_total
   FROM fines
   WHERE fine_status = 'UNPAID'
 ) f;

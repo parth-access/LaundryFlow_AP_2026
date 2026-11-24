@@ -52,7 +52,7 @@ Environment: PostgreSQL 16.15, Linux x86-64, data fully in memory after the firs
 | R11 | One of a student's orders, with its fine | 0.064 | 0.065 | 0.068 | Index Scan using orders_pkey, Index Scan using fines_pkey, Seq Scan |
 | R12 | A student's fines | 0.112 | 0.103 | 0.151 | Seq Scan, Index Scan using ix_orders_student, Index Scan using fines_pkey |
 | R13 | A student's laundry in numbers | 0.108 | 0.106 | 0.115 | Index Scan using ix_orders_student, Index Scan using fines_pkey |
-| W10 | Submit order if no active order exists | 0.702 | 0.741 | 0.811 | Index Only Scan using uq_orders_one_open_per_student |
+| W10 | Submit order if no active order exists | 0.601 | 0.550 | 0.769 | Index Only Scan using students_pkey, Index Scan using uq_orders_one_open_per_student |
 | W11 | Cancel a hand-in | 0.313 | 0.272 | 0.477 | Index Scan using uq_orders_one_open_per_student |
 | W12 | Change the clothes count on a hand-in | 0.312 | 0.326 | 0.343 | Index Scan using uq_orders_one_open_per_student |
 | R20 | Current fine policy | 0.057 | 0.047 | 0.084 | Seq Scan |
@@ -70,10 +70,10 @@ Environment: PostgreSQL 16.15, Linux x86-64, data fully in memory after the firs
 | W32 | Mark fine paid | 0.236 | 0.248 | 0.260 | Index Scan using ix_fines_unpaid |
 | W33 | Waive unpaid fine | 0.481 | 0.481 | 0.521 | Index Scan using ix_fines_unpaid |
 | W35 | Mark several orders ready | 1.025 | 0.980 | 1.127 | Index Scan using uq_orders_one_open_per_student |
-| W34 | Undo mark ready | 0.732 | 0.744 | 0.794 | Index Scan using orders_pkey, Index Only Scan |
+| W34 | Undo mark ready | 1.116 | 1.181 | 1.712 | Index Scan using orders_pkey, Index Only Scan using order_changes_pkey |
 | R40 | All staff | 0.050 | 0.050 | 0.056 | Seq Scan |
 | R41 | Fine policy history | 0.059 | 0.058 | 0.064 | Seq Scan |
-| R42 | Numbers at a glance | 19.018 | 19.075 | 20.441 | Seq Scan, Index Only Scan using ix_orders_open, Index Only Scan using ix_fines_unpaid, Index Scan using ix_fines_unpaid |
+| R42 | Numbers at a glance | 21.557 | 19.399 | 29.538 | Seq Scan, Index Only Scan using ix_orders_open, Index Scan using ix_fines_unpaid |
 | W40 | Add staff | 0.206 | 0.204 | 0.236 | no table scan (insert / constant) |
 | W41 | Deactivate or reactivate staff | 0.258 | 0.231 | 0.380 | Seq Scan |
 | W42 | New fine policy | 0.237 | 0.233 | 0.267 | no table scan (insert / constant) |
@@ -82,7 +82,7 @@ Full plans: `plans/<ID>.txt`; raw numbers: `plans/summary.csv`.
 
 ## 4. What the numbers show
 
-**28 of 36 queries take under 1 ms.** Every query a student or the counter waits on is an index lookup:
+**27 of 36 queries take under 1 ms.** Every query a student or the counter waits on is an index lookup:
 - finding a bag (R01, R34)
 - the student's home and order pages (R03, R10–R13)
 - sign-in lookups (R04, R05)
@@ -97,12 +97,24 @@ Their cost depends on the few rows they return, not on the size of the tables, s
 
 **The three slowest queries are staff reports**, and each one reads a whole table:
 
+### Rewritten with JOINs (CP3 feedback)
+
+Three queries used subqueries where a JOIN fits. They were rewritten and timed again (same results, checked against the old versions):
+
+| Query | Before | After | Time before → after (median) |
+|---|---|---|---|
+| W10 | `WHERE NOT EXISTS (SELECT … FROM orders …)` | `LEFT JOIN orders … WHERE o.order_id IS NULL` (anti-join) | 0.741 → 0.550 ms |
+| W34 | `coalesce((SELECT max(change_no) …), 0) + 1` | `LEFT JOIN order_changes … GROUP BY`, `coalesce(max(c.change_no), 0) + 1` | 0.744 → 1.181 ms |
+| R42 | four scalar subqueries | three one-row aggregates `CROSS JOIN`ed | 19.075 → 19.399 ms |
+
+All three stay in the same range. W34's time is mostly the UPDATE and the foreign-key checks; the join adds a one-row sort. For R42 we also tried counting both order numbers in one pass with `FILTER`: it was no faster and lost the `ix_orders_open` index, so each count keeps its own subquery.
+
 ### R33: settled fines history (20.7 ms)
 It reads all 13,218 paid or waived fines and joins every order, only to show the newest 50 (`Sort Method: top-N heapsort`). The sort key `coalesce(fine_paid_at, received_at)` mixes two tables, so no index can give the rows already in order. It grows **linearly with the fine history**: about 10× slower after 10 years of data. Fixes, if it ever matters:
 - store a `settled_at` column on `fines` (set on Paid or Waive) with an index on it, so the newest 50 come straight from the index
 - or only show the last 3 months
 
-### R42: numbers at a glance, "orders today" (19.0 ms) → **0.026 ms with a fix**
+### R42: numbers at a glance, "orders today" (19.4 ms) → **0.026 ms with a fix**
 The plan shows `Seq Scan on orders … Rows Removed by Filter: 48762` to count **0** rows. The filter is
 `(submitted_at AT TIME ZONE 'Asia/Kolkata')::date = (now() AT TIME ZONE 'Asia/Kolkata')::date`, and converting the column to a date hides it from any index. We tested the fix: compare the raw column to the start and end of today in India time, plus an index on `orders (submitted_at)`:
 
@@ -119,7 +131,7 @@ Same answer, about **700× faster**, and it stays flat as orders grow. This is t
 ### R30: unpaid fines list (8.6 ms)
 It starts from the 954 unpaid fines (using `ix_fines_unpaid`), but the planner then hashes them against a **Seq Scan of all 48,762 orders** instead of looking each order up by its primary key. With only 954 rows that is still the cheaper plan today. As orders grow, the planner switches to index lookups by itself once the full scan costs more, so we leave it.
 
-**Writes:** every W query is 0.2–1 ms, including the transaction-style ones:
+**Writes:** every W query is 0.2–1.1 ms, including the transaction-style ones:
 - W10, submit only if there is no open order
 - W34, undo plus an audit row in one statement
 - W35, marking 20 bags ready in one UPDATE
@@ -131,8 +143,8 @@ The partial unique index makes W10's "only one open order" check cost almost not
 | | Count |
 |---|---:|
 | Queries timed | 36 |
-| Under 1 ms | 28 |
-| 1–10 ms | 6 |
+| Under 1 ms | 27 |
+| 1–10 ms | 7 |
 | 10–25 ms | 2 |
 | Slowest | R33, 20.7 ms |
 
