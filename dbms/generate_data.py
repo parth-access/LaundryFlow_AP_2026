@@ -86,14 +86,77 @@ def hand_in_time(day):
 
 
 def make_orders():
-    # TODO (Parth):
-    # - N_ORDERS orders spread over Jan-Nov 2026, more on weekends (realistic load)
-    # - status mix, e.g. 85% COLLECTED, 4% READY, 4% RECEIVED, 4% SUBMITTED, 2% CANCELLED, 1% DISPUTED
-    # - every row must pass the CHECKs in 03_schema.sql: timestamps in order, received_* all set
-    #   together, status matching the timestamps, policy_id = 1 once received
-    # - verified_count: usually equal to declared, sometimes 1-5 more (that is where fines come from)
-    # Return the received orders so make_fines() can use them.
-    return []
+    """
+    Every student gets a timeline of bags. A bag is collected before the next one is
+    handed in, so a student never has two open orders (uq_orders_one_open_per_student).
+    Only a student's LAST bag can still be open, and only if its steps are after NOW.
+
+    Every row passes the CHECKs in 03_schema.sql:
+      * received_at, received_by, verified_count and policy_id are all set together
+      * submitted <= received <= ready <= collected
+      * order_status matches the steps reached (CANCELLED / DISPUTED stand alone)
+    Returns the counted orders, for make_fines() and make_changes().
+    """
+    per_student = N_ORDERS // N_STUDENTS
+    rows, counted = [], []
+    order_id = 0
+    for student_id in range(1, N_STUDENTS + 1):
+        day = START + timedelta(days=rng.randint(0, 10))
+        for _ in range(per_student):
+            submitted = hand_in_time(day)
+            if submitted >= NOW:
+                break
+            order_id += 1
+            declared = max(1, min(100, int(rng.gauss(9, 3))))
+            roll = rng.random()
+
+            if roll < 0.02:                            # handed in by mistake, cancelled before counting
+                rows.append((order_id, student_id, None, "CANCELLED", declared, None,
+                             ts(submitted), None, None, None, None, None))
+                day = submitted + timedelta(days=rng.randint(1, 4))
+                continue
+
+            received = submitted + timedelta(minutes=rng.randint(20, 6 * 60))
+            ready = received + timedelta(hours=rng.randint(12, 48))
+            collected = ready + timedelta(hours=rng.randint(2, 72))
+            if roll < 0.85:
+                verified = declared                    # most students count right
+            elif roll < 0.97:
+                verified = min(100, declared + rng.randint(1, 5))   # under-declared: a fine if over 10
+            else:
+                verified = max(1, declared - rng.randint(1, 2))
+            staff_in, staff_out = rng.randint(2, N_STAFF), rng.randint(2, N_STAFF)
+
+            if roll >= 0.99:                           # student disputes the count
+                status, ready, collected = "DISPUTED", None, None
+            elif received > NOW:                       # the steps that have not happened yet stay empty
+                status, received, ready, collected = "SUBMITTED", None, None, None
+            elif ready > NOW:
+                status, ready, collected = "RECEIVED", None, None
+            elif collected > NOW:
+                status, collected = "READY", None
+            else:
+                status = "COLLECTED"
+            if collected is None:
+                staff_out = None
+
+            if received is None:
+                rows.append((order_id, student_id, None, status, declared, None,
+                             ts(submitted), None, None, None, None, None))
+            else:
+                rows.append((order_id, student_id, 1, status, declared, verified,
+                             ts(submitted), ts(received), staff_in, ts(ready), ts(collected), staff_out))
+                counted.append({"order_id": order_id, "status": status, "verified": verified,
+                                "received": received, "collected": collected})
+            if status in ("SUBMITTED", "RECEIVED", "READY"):
+                break                                  # still open: no next bag for this student yet
+            day = (collected or received) + timedelta(days=rng.randint(4, 14))
+
+    insert("orders", ["order_id", "student_id", "policy_id", "order_status", "declared_count",
+                      "verified_count", "submitted_at", "received_at", "received_by", "ready_at",
+                      "collected_at", "collected_by"], rows, overriding=True)
+    print("SELECT setval(pg_get_serial_sequence('orders', 'order_id'), (SELECT max(order_id) FROM orders));")
+    return counted
 
 
 def make_fines(received_orders):
