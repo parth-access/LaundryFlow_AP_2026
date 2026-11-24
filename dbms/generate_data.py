@@ -159,10 +159,29 @@ def make_orders():
     return counted
 
 
-def make_fines(received_orders):
-    # TODO (Parth): one fine per order where verified_count > 10, amount = (count - 10) * 5.
-    # Mostly PAID for collected orders, some UNPAID, a few WAIVED (waived_by + waiver_reason required).
-    pass
+def make_fines(counted):
+    """
+    One fine per counted order over the free limit: (verified - 10) * Rs 5.
+    Collected bags: mostly PAID when collected, some still UNPAID, a few WAIVED.
+    Bags not collected yet: UNPAID.
+    """
+    reasons = ["Counting error at the counter", "First time over the limit", "Machine damaged clothes",
+               "Hostel warden approved", "Medical laundry"]
+    rows = []
+    for o in counted:
+        extra = o["verified"] - FREE_LIMIT
+        if extra <= 0:
+            continue
+        amount = extra * FINE_PER_EXTRA
+        status, paid_at, waived_by, reason = "UNPAID", None, None, None
+        if o["status"] == "COLLECTED":
+            r = rng.random()
+            if r < 0.88:
+                status, paid_at = "PAID", ts(o["collected"])
+            elif r < 0.94:
+                status, waived_by, reason = "WAIVED", 1, rng.choice(reasons)
+        rows.append((o["order_id"], amount, status, paid_at, waived_by, reason))
+    insert("fines", ["order_id", "fine_amount", "fine_status", "fine_paid_at", "waived_by", "waiver_reason"], rows)
 
 
 if __name__ == "__main__":
