@@ -78,6 +78,13 @@ def make_students():
                         "bag_verified_at", "bag_verified_by", "is_active"], rows)
 
 
+def hand_in_time(day):
+    """A hand-in time on `day`: weekends get more bags, and people come between 8:00 and 21:00."""
+    if day.weekday() < 5 and rng.random() < 0.45:     # many weekday bags wait for the weekend
+        day += timedelta(days=5 - day.weekday() + rng.randint(0, 1))
+    return day.replace(hour=rng.randint(8, 20), minute=rng.randint(0, 59), second=rng.randint(0, 59))
+
+
 def make_orders():
     # TODO (Parth):
     # - N_ORDERS orders spread over Jan-Nov 2026, more on weekends (realistic load)
